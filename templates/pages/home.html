@@ -1,0 +1,111 @@
+{% extends 'core/base.html' %}
+{% load static %}
+
+{% block content %}
+
+<div class="container mx-auto px-4">
+  <!-- Background Section -->
+  <div class="min-h-screen bg-gradient-to-b from-primary-50 to-white py-12">
+
+    <div class="max-w-3xl mx-auto bg-white rounded-2xl shadow-xl p-8 welcome-background border border-gray-100">
+      {% if request.user.is_authenticated %}
+        {% if water %}
+          <div class="result-container text-center space-y-6">
+            {% if messages %}
+              {% for message in messages %}
+                <p class="{{ message.tags }} p-6 flex justify-center text-lg bg-green-50 text-green-700 rounded-lg">{{ message }}</p>
+              {% endfor %}
+            {% else %}
+              <h2 class="text-3xl font-bold text-gray-900 mb-4">Your Daily Water Goal</h2>
+              <div class="flex items-center justify-center space-x-2">
+                <span class="text-5xl font-bold text-primary-500">{{ water_left }}</span>
+                <span class="text-2xl text-gray-500">liters</span>
+              </div>
+              <form action="" method="post" class="mt-8">
+                {% csrf_token %}
+                <div class="space-y-4">
+                  {{ form.as_p }}
+                </div>
+                <button type="submit" class="mt-6 bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-8 rounded-full transition duration-200 shadow-md hover:shadow-lg">
+                  Update Progress
+                </button>
+              </form>
+            {% endif %}
+            <button type="button" id="stop-btn" onclick="stopWaterReminder()" 
+                    class="inline-flex items-center justify-center bg-red-500 hover:bg-red-600 text-white font-semibold py-3 px-8 rounded-full transition duration-200 shadow-md hover:shadow-lg">
+              <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+              </svg>
+              Stop Reminder
+            </button>
+          </div>
+        {% endif %}
+      {% else %}
+        <div class="result-container text-center">
+          <h2 class="text-2xl font-bold text-gray-900 mb-4">Your Recommended Daily Water Intake:</h2>
+          <span class="text-4xl font-bold text-blue-600">{{ water }} L</span>
+          <br>
+          <button type="button" id="stop-btn" onclick="stopWaterReminder()"
+                  class="mt-4 bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-6 rounded-full transition duration-200">
+            Stop Reminder
+          </button>
+        </div>
+      {% endif %}
+
+      <div class="text-center mt-12 space-y-6 text-black">
+        <h1 class="text-4xl font-bold text-black mb-4">Welcome to GetDailyDrink</h1>
+        <p class="text-xl text-black mb-8 max-w-2xl mx-auto">Track your daily water intake and stay hydrated with personalized recommendations</p>
+        <a href="{% url 'log_water' %}" 
+           class="inline-flex items-center justify-center bg-primary-500 hover:bg-primary-600 text-white font-semibold py-3 px-8 rounded-full text-lg transition duration-200 shadow-md hover:shadow-lg">
+          <svg class="w-6 h-6 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+          </svg>
+          Start Quiz
+        </a>
+      </div>
+    </div>
+
+    <script>
+      let reminderTimer; // Store the interval to stop the reminder
+
+      document.addEventListener("DOMContentLoaded", function() {
+          // Ask for notification permission when the page loads
+          if ("Notification" in window) {
+              Notification.requestPermission().then(permission => {
+                  if (permission !== "granted") {
+                      // alert("Please allow notifications to receive reminders!");
+                  }
+              });
+          }
+      });
+
+      // Function to start water reminders
+      function startWaterReminder() {
+          let interval = document.getElementById("reminder-interval").value;
+          let timeMs = interval * 60 * 60 * 1000; // Convert hours to milliseconds
+      
+          if (Notification.permission === "granted") {
+              reminderTimer = setInterval(function() {
+                  new Notification("💧 Time to Drink Water!", {
+                      body: `Stay hydrated! It's time to drink water.`,
+                      icon: "https://cdn-icons-png.flaticon.com/512/2913/2913520.png" // Water icon
+                  });
+              }, timeMs);
+      
+              alert(`Water reminder set every ${interval} hour(s)!`);
+          } else {
+              alert("Please enable notifications to receive reminders.");
+          }
+      }
+
+      // Function to stop water reminders
+      function stopWaterReminder() {
+          clearInterval(reminderTimer);
+          alert("Water reminders stopped.");
+      }
+    </script>
+      
+  </div>
+</div>
+
+{% endblock content %}

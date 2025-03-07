@@ -1,0 +1,53 @@
+{% extends 'pages/base.html' %}
+
+{% block title %}<title>Login page</title>{% endblock title %}
+{% block content %}
+<br>
+
+{% if messages %}
+{% for message in messages %}
+    <p class="{{ message.tags }} p-6 flex justify-center">{{ message }}</p>
+{% endfor %}
+{% endif %}
+
+<br>
+
+<form method="post" class="space-y-4 max-w-md mx-auto p-4 bg-white shadow rounded">
+    {% csrf_token %}
+    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
+    <input 
+        type="text" 
+        name="username" 
+        id="username" 
+        placeholder="Enter your username"
+        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    />
+
+    <label for="password" class="block text-sm font-medium text-gray-700">Password</label>
+    <input 
+        type="password" 
+        name="password" 
+        id="password" 
+        placeholder="Enter your password"
+        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+    />
+
+    <button 
+        type="submit" 
+        class="w-full py-2 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-600"
+    >
+        Submit
+    </button>
+
+    {% load socialaccount %}
+
+    <a href="{% provider_login_url 'google' %}" class="btn btn-danger flex gap-2">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" width="20">
+        <br>
+        Login with Google
+    </a>
+
+    
+</form>
+
+{% endblock content %}

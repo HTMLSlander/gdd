@@ -1,0 +1,331 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", sans-serif;
+}
+:root {
+  --primary-color: #0056b3;
+  --secondary-color: #f0f0f0;
+  --danger-color: #ff0000;
+  --dark-color: #000000;
+}
+
+body,
+html {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: transparent;
+  color: var(--dark-color);
+  margin: 0;
+  padding: 0;
+}
+
+.none {
+  display: none;
+}
+
+h1 {
+  font-size: 2rem; /* Reduced from 2.5rem */
+  margin-bottom: 1rem; /* Reduced from 1.25rem */
+}
+p {
+  font-size: 1rem; /* Reduced from 1.125rem */
+  margin-bottom: 1rem; /* Reduced from 1.25rem */
+}
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  text-align: center;
+  width: 100%;
+  max-width: 800px;
+  position: relative;
+  z-index: 1;
+}
+
+.background {
+  background: url("/static/images/minecraft-night-moon-rays-sky-temple-stars-hd-wallpaper-preview.jpg")
+    no-repeat center center fixed;
+  background-size: cover;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  color: var(--secondary-color);
+  padding: 1.25rem;
+  z-index: 0;
+  overflow-y: auto;
+}
+
+button {
+  font-size: 1.125rem;
+  padding: 0.625rem 1.25rem; /* 10px 20px */
+  background: none;
+  color: var(--secondary-color);
+  border: 1px solid var(--secondary-color);
+  border-radius: 0.3125rem; /* 5px */
+  cursor: pointer;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--dark-color);
+}
+.question-container {
+  display: none;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
+  width: 85%;
+  max-width: 350px;
+  margin: 0 auto;
+  margin-bottom: 4rem; /* Increased space before footer */
+}
+
+.welcome-background {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  background-color: transparent;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  width: 85%;
+  max-width: 350px;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.welcome-background {
+  color: var(--secondary-color);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  font-size: 2.2rem;
+}
+
+.welcome-background  {
+  color: var(--secondary-color);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  font-size: 1.1rem;
+}
+
+.welcome-background .btn {
+  margin-top: 1rem;
+  padding: 0.6rem 1.5rem;
+  font-size: 1rem;
+  border: 2px solid var(--secondary-color);
+  background-color: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(5px);
+  transition: all 0.3s ease;
+}
+
+.welcome-background .btn:hover {
+  background-color: var(--secondary-color);
+  color: var(--dark-color);
+  transform: translateY(-2px);
+}
+
+.flex-container {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+input, select {
+  width: 65%;
+  padding: 0.4rem;
+  margin-bottom: 0.6rem;
+  border: 1px solid var(--secondary-color);
+  border-radius: 0.25rem;
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--secondary-color);
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  font-size: 0.9rem;
+}
+
+/* Add specific styles for select elements and their options */
+select {
+  appearance: none; /* Remove default appearance */
+  cursor: pointer;
+}
+
+select option {
+  background-color: rgba(0, 0, 0, 0.8); /* Dark background for options */
+  color: var(--secondary-color); /* Light text color */
+  padding: 0.5rem;
+}
+
+/* Add focus styles */
+select:focus, input:focus {
+  outline: none;
+  border-color: var(--secondary-color);
+  box-shadow: 0 0 5px rgba(255, 255, 255, 0.3);
+}
+
+.question-group {
+  width: 100%;
+  margin-bottom: 0.8rem; /* Reduced further */
+  text-align: center;
+}
+
+.buttons {
+  display: block flex;
+  justify-content: space-between;
+  margin-top: 1.25rem; /* 20px */
+}
+
+.result-container {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: var(--secondary-color);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 85%;
+  max-width: 350px;
+  margin: 0 auto;
+  margin-bottom: 4rem;
+  text-align: center;
+}
+
+.result-container h2 {
+  color: var(--secondary-color);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.result-container p {
+  color: var(--secondary-color);
+  font-size: 1.2rem;
+  margin-bottom: 1rem;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+footer {
+  font-size: 0.8rem;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0, 0, 0, 0.5); /* Made more transparent */
+  color: var(--secondary-color);
+  padding: 0.625rem;
+  z-index: 2;
+  backdrop-filter: blur(5px);
+}
+
+footer a {
+  color: var(--secondary-color);
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: underline;
+}
+
+.warning {
+  font-size: 0.8rem;
+  text-align: center;
+  padding: 0.625rem; /* 10px */
+}
+
+.fade-none {
+  animation: fadeOut 0.5s forwards;
+}
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+    transform: translateY(0px);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(30px);
+    display: none;
+  }
+}
+
+@media (max-width: 768px) {
+  body,
+  html {
+    flex-direction: column;
+    padding: 0.5rem;
+    height: auto;
+    padding-bottom: 60px; /* Added to prevent footer overlap */
+  }
+
+  .container {
+    width: 100%;
+    padding: 0.5rem;
+    margin-top: 1rem;
+  }
+
+  .background {
+    padding: 0.5rem;
+    align-items: flex-start;
+    overflow-y: auto;
+    padding-bottom: 60px; /* Added to prevent footer overlap */
+  }
+
+  .welcome-background,
+  .question-container,
+  .result-container {
+    width: 95%;
+    max-width: 100%;
+    margin-bottom: 2rem;
+    padding: 0.8rem;
+  }
+
+  h1 {
+    font-size: 1.8rem;
+  }
+
+  p {
+    font-size: 0.9rem;
+  }
+
+  input, select {
+    width: 80%;
+  }
+
+  button {
+    font-size: 0.9rem;
+    padding: 0.4rem 0.8rem;
+  }
+
+  footer {
+    position: fixed; /* Changed back to fixed */
+    bottom: 0;
+    font-size: 0.7rem;
+    padding: 0.5rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+  }
+
+  .warning {
+    display: none;
+  }
+}
