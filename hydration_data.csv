@@ -1,0 +1,10 @@
+gender,weight,age,activity_level,climate,health_conditions,base_water
+male,70,25,moderately,temperate,none,2.5
+male,17,57,sedentary,temperate,none,2.5
+female,60,30,lightly-active,hot,none,2.2
+male,80,40,very-active,cold,heart disease,3.0
+female,17,55,lightly-active,temperate,none,2.7
+female,35,66,very-active,hot,none,2.7
+male,40,76,sedentary,temperate,pregnancy,2.7
+1,,,0,0,0
+0,17,57,0,0,0

@@ -1,115 +1,76 @@
-{% extends 'pages/base.html' %}
+{% extends 'core/base.html' %}
 
-{% block title %}<title>Register Page</title>{% endblock title %}
+{% load static %}
 
 {% block content %}
-<br>
-<form method="post" class="space-y-4 max-w-md mx-auto p-4 bg-white shadow rounded">
-    {% csrf_token %}
-    <!-- Porfile -->
-    <!-- <label for="first_name" class="block text-sm font-medium text-gray-700">First Name</label>
-    <input 
-        type="text" 
-        name="first_name" 
-        id="first_name" 
-        placeholder="Enter your First Name"
-        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+<body>
+    <!-- Signup Section -->
+    <section class="auth-section">
+        <div class="auth-container">
+            <div class="auth-left">
+                <img src="{% static 'images/image.png' %}" alt="Placeholder Image" class="placeholder-image">
+            </div>
+            <div class="auth-right">
+                <div class="auth-form-container">
+                    <h2>Create a Get Daily Drink Account</h2>
+                    <form class="auth-form" id="signup-form">
+                        {% csrf_token %}
 
-    />
-    <label for="last_name" class="block text-sm font-medium text-gray-700">Last Name</label>
-    <input 
-        type="text" 
-        name="last_name" 
-        id="last_name" 
-        placeholder="Enter your Last Name"
-        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-
-    />
-    <label for="phone" class="block text-sm font-medium text-gray-700">phone</label>
-    <input 
-        type="text" 
-        name="phone" 
-        id="phone" 
-        placeholder="Enter your Last Phone"
-        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-
-    />
-    <label for="bio" class="block text-sm font-medium text-gray-700">Bio</label>
-    <textarea
-        type="text" 
-        name="bio" 
-        id="bio" 
-        placeholder="Enter your Bio"
-        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-    >
-    </textarea> -->
-    <!-- Email Field -->
-    <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-    <input 
-        type="text" 
-        name="email" 
-        id="email" 
-        placeholder="Enter your email"
-        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        value="{{ request.POST.email|default:'' }}"
-    />
-    {% if form.email.errors %}
-        <p class="text-red-500 text-sm">{{ form.email.errors|first }}</p>
-    {% endif %}
-
-    <!-- Username Field -->
-    <label for="username" class="block text-sm font-medium text-gray-700">Username</label>
-    <input 
-        type="text" 
-        name="username" 
-        id="username" 
-        placeholder="Enter your username"
-        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-        value="{{ request.POST.username|default:'' }}"
-    />
-    {% if form.username.errors %}
-        <p class="text-red-500 text-sm">{{ form.username.errors|first }}</p>
-    {% endif %}
-
-    <!-- Password1 Field -->
-    <label for="password1" class="block text-sm font-medium text-gray-700">Password</label>
-    <input 
-        type="password" 
-        name="password1" 
-        id="password1" 
-        placeholder="Enter your password"
-        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-    />
-    {% if form.password1.errors %}
-        <p class="text-red-500 text-sm">{{ form.password1.errors|first }}</p>
-    {% endif %}
-
-    <!-- Password2 Field -->
-    <label for="password2" class="block text-sm font-medium text-gray-700">Password Confirmation</label>
-    <input 
-        type="password" 
-        name="password2" 
-        id="password2" 
-        placeholder="Confirm your password"
-        class="block w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
-    />
-    {% if form.password2.errors %}
-        <p class="text-red-500 text-sm">{{ form.password2.errors|first }}</p>
-    {% endif %}
-
-    <!-- Submit Button -->
-    <button 
-        type="submit" 
-        class="w-full py-2 px-4 bg-blue-500 text-white font-bold rounded hover:bg-blue-600"
-    >
-        Submit
-    </button>
+                        <div class="form-group">
+                            <input name="username" type="text" id="email" placeholder="Email or username" required>
+                        </div>
+                        <div class="form-group">
+                            <div class="verification-group">
+                                <input type="text" id="verification" placeholder="Verification code" required>
+                                <button type="button" class="send-btn">Send</button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password1" id="password" placeholder="Password" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" name="password2" id="confirm-password" placeholder="Confirm password" required>
+                        </div>
+                        
+                        <div class="auth-divider">
+                            <span>Or</span>
+                        </div>
+                        
+                        <div class="social-auth">
+                            <button type="button" class="google-auth">
+                                <i class="fab fa-google"></i>
+                                Continue with Google
+                            </button>
+                            <button type="button" class="apple-auth">
+                                <i class="fab fa-apple"></i>
+                                Continue with Apple
+                            </button>
+                        </div>
+                        <div class="auth-links">
+                            <p>No account? <a href="login.html">Log In</a></p>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
     
-    {% load socialaccount %}
 
-    <a href="{% provider_login_url 'google' %}" class="btn btn-danger flex gap-2">
-        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google Logo" width="20">
-        Login with Google
-    </a>
-</form>
+    <!-- Footer -->
+    <footer class="auth-footer">
+        <div class="container">
+            <div class="copyright">
+                <p>&copy; 2025 Daily Drink Tracker. Made with <i class="fas fa-heart"></i> by <a href="https://naranbhusal02.me" style="text-decoration: none; color: aliceblue;">Narayan Bhusal</a>.</p>
+                <p style="margin-top: 10px; font-size: 12px;">
+                    <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px;">Privacy</a>
+                    <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px;">Terms</a>
+                    <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px;">Cookies</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+</body>
 {% endblock content %}

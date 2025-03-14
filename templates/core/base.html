@@ -9,8 +9,9 @@
     <!-- Add Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- Add Tailwind CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
+
+
     <!-- Add custom Tailwind config -->
     <script>
       tailwind.config = {
@@ -33,6 +34,39 @@
   </head>
   <body class="bg-gray-50 min-h-screen">
 
+    <!-- Header -->
+    <header>
+      <div class="header-container">
+          <div class="logo">
+              <a href="{% url 'home' %}">
+                <img src="https://iili.io/3FO8EQt.png" alt="Daily Drink Logo" class="logo-image" style="border-radius: 30px;">
+              </a>
+          </div>
+          <div class="nav-links">
+              <a href="{% url 'home' %}" class="active">Home</a>
+              <a href="#" class="active">Rankup</a>
+              <a href="#video-section" class="active">Tutorial</a>
+              <a href="#footer-container" class="active">Contact</a>
+          </div>
+          <div class="auth-buttons">
+              <a href="{% url 'login' %}" class="login-btn">Login</a>
+              <a href="{% url 'account_signup' %}" class="get-started-btn">Get Started</a>
+          </div>
+          <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+              <i class="fas fa-bars"></i>
+          </button>
+      </div>
+  </header>
+
+  <!-- Mobile Menu -->
+  <div class="mobile-menu" id="mobile-menu">
+      <a href="index.html" class="active">Home</a>
+      <a href="#">Rankup</a>
+      <a href="#video-section">Tutorial</a>
+      <a href="#footer-container">Contact</a>
+      <a href="{% url 'login' %}">Login</a>
+      <a href="{% url 'account_signup' %}" class="cta-btn">Get Started</a>
+  </div>
     {% block content %}
     {% endblock content %}
 
