@@ -95,54 +95,14 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td>Username1</td>
-                            <td>104 points</td>
-                            <td><span class="level-badge">Level 4</span></td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Username2</td>
-                            <td>97 points</td>
-                            <td><span class="level-badge">Level 4</span></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Username3</td>
-                            <td>85 points</td>
-                            <td><span class="level-badge">Level 3</span></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Username4</td>
-                            <td>79 points</td>
-                            <td><span class="level-badge">Level 3</span></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Username5</td>
-                            <td>72 points</td>
-                            <td><span class="level-badge">Level 3</span></td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td>Username6</td>
-                            <td>65 points</td>
-                            <td><span class="level-badge">Level 2</span></td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td>Username7</td>
-                            <td>58 points</td>
-                            <td><span class="level-badge">Level 2</span></td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td>Username8</td>
-                            <td>51 points</td>
-                            <td><span class="level-badge">Level 2</span></td>
-                        </tr>
+                        {% for reward in rewards %}
+                            <tr>
+                                <td>{{ forloop.counter }}.</td>
+                                <td>{{ reward.user.username }}</td>
+                                <td>{{ reward.total }} L</td>
+                                <td><span class="level-badge">Level {{ reward.get_level }}</span></td>
+                            </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <div class="pagination">
@@ -157,24 +117,42 @@
         <div class="container">
             <div class="dashboard-header">
                 <h2>Your current track</h2>
-                <a href="#" class="track-btn">Add a drink</a>
+                <a href="{% url 'log_water' %}" class="track-btn">Add a drink</a>
             </div>
             <div class="drink-circles">
-                <div class="drink-circle">
-                    <span class="drink-label">Today</span>
-                    <h3>1.5/8 oz</h3>
-                    <p>Daily drink</p>
-                </div>
-                <div class="drink-circle">
-                    <span class="drink-label">This week</span>
-                    <h3>10.5/56 oz</h3>
-                    <p>Weekly goal</p>
-                </div>
-                <div class="drink-circle">
-                    <span class="drink-label">This month</span>
-                    <h3>15.0/64 oz</h3>
-                    <p>Monthly goal</p>
-                </div>
+                {% if water %}
+                    <div class="drink-circle">
+                        <span class="drink-label">Today</span>
+                        <h3>{{ water}} L</h3>
+                        <p>Daily drink</p>
+                    </div>
+                    <div class="drink-circle">
+                        <span class="drink-label">This week</span>
+                        <h3>{{ dailygoal.weekly_drink }} L</h3>
+                        <p>Weekly goal</p>
+                    </div>
+                    <div class="drink-circle">
+                        <span class="drink-label">This month</span>
+                        <h3>{{ dailygoal.monthly_drink }} L</h3>
+                        <p>Monthly goal</p>
+                    </div>
+                {% else %}
+                    <div class="drink-circle">
+                        <span class="drink-label">Today</span>
+                        <h3>0 L</h3>
+                        <p>Daily drink</p>
+                    </div>
+                    <div class="drink-circle">
+                        <span class="drink-label">This week</span>
+                        <h3>0 L</h3>
+                        <p>Weekly goal</p>
+                    </div>
+                    <div class="drink-circle">
+                        <span class="drink-label">This month</span>
+                        <h3>0 L</h3>
+                        <p>Monthly goal</p>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>
@@ -189,21 +167,12 @@
                     <h2>Positions</h2>
                 </div>
                 <div class="positions-grid">
-                    <div class="position-card second">
-                        <h3>Username</h3>
-                        <p>9 oz</p>
-                        <span>2nd</span>
-                    </div>
-                    <div class="position-card first">
-                        <h3>Username</h3>
-                        <p>12 oz</p>
-                        <span>1st</span>
-                    </div>
-                    <div class="position-card third">
-                        <h3>Username</h3>
-                        <p>8 oz</p>
-                        <span>3rd</span>
-                    </div>
+                    {% for winner in winners %}
+                        <div class="position-card {% if forloop.counter == 1 %} first {% elif forloop.counter == 2 %} second {% elif forloop.counter == 3 %} third {% endif %}">
+                            <h3>{{ forloop.counter }}rd</h3>
+                            <p>{{ winner.user.username }}<br>{{ winner.total }} L</p>
+                        </div>
+                    {% endfor %}
                 </div>
                 <table class="leaderboard-table">
                     <thead>

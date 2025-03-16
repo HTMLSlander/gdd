@@ -26,10 +26,10 @@ class UserWaterIntake(models.Model):
             return 0
         return round(self.water_amount * 7, 2)
     
-    def annualy_drink(self):
+    def monthly_drink(self):
         if self.water_amount is None:
             return 0
-        return (self.water_amount * 365, 2)
+        return round(self.water_amount * 30, 2)
 
 class WaterTake(models.Model):
     WATER_CHOICES = [
@@ -55,7 +55,29 @@ class SaveGoal(models.Model):
     water_intake = models.ForeignKey(UserWaterIntake, on_delete=models.CASCADE)
     complete = models.BooleanField(default=False)
     points = models.PositiveIntegerField(default=0)
+    total_water_drink = models.FloatField(default=0)
 
+    def total(self):
+        # Get all water intake records for this user
+        water_intakes = UserWaterIntake.objects.filter(user=self.user)
+        # Sum up all water amounts
+        total = sum(intake.water_amount or 0 for intake in water_intakes)
+        self.total_water_drink = total
+        return round(total, 2)
+
+    def get_level(self):
+        points = self.points
+        if points < 20:
+            return 0
+        elif points < 40:
+            return 1
+        elif points < 60:
+            return 2
+        elif points < 80:
+            return 3
+        elif points >= 100:
+            return 4
+        
 
 class Email(models.Model):
     email = models.EmailField()

@@ -1,0 +1,96 @@
+{% extends 'core/base.html' %}
+
+{% load static %}
+{% block content %}
+
+<body>
+    <link rel="stylesheet" href="{% static 'css/rankup.css' %}">
+    <!-- Main Content -->
+    <main>
+        <!-- Track Section -->
+        <section class="dashboard-section">
+            <div class="container">
+                <div class="dashboard-header">
+                    <h2>Your current track</h2>
+                    <a href="{% url 'log_water' %}" class="track-btn">Trigger to position</a>
+                </div>
+                <div class="drink-circles">
+                    <div class="drink-circle">
+                        <span class="drink-label">Daily drink</span>
+                        <h3>{{ water }}/L oz</h3>
+                    </div>
+                    {% if request.user.is_authenticated %}
+                        <div class="drink-circle">
+                            <span class="drink-label">Weekly drink</span>
+                            <h3>{{ recap_data.week_goal }}/L oz</h3>
+                        </div>
+                        <div class="drink-circle">
+                            <span class="drink-label">Month drink</span>
+                            <h3>{{ recap_data.month_goal }}/L oz</h3>
+                        </div>
+                    {% else %}
+                        <div class="drink-circle">
+                            <span class="drink-label">Weekly drink</span>
+                            <h3>{{ dailygoal.weekly_drink }}/L oz</h3>
+                        </div>
+                        <div class="drink-circle">
+                            <span class="drink-label">Month drink</span>
+                            <h3>{{ dailygoal.monthly_drink }}/L oz</h3>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+
+        <!-- Positions Section -->
+        <section class="positions-section">
+            <div class="positions-wave"></div>
+            <div class="container">
+                <div class="positions-content">
+                    <div class="positions-header">
+                        <i class="fas fa-trophy trophy-icon"></i>
+                        <h2>Positions</h2>
+                    </div>
+                    <div class="positions-grid">
+                        {% for winner in winners %}
+                            <div class="position-card {% if forloop.counter == 1 %} first {% elif forloop.counter == 2 %} second {% elif forloop.counter == 3 %} third {% endif %}">
+                                <h3>{{ forloop.counter }}rd</h3>
+                                <p>{{ winner.user.username }}<br>{{ winner.total }} L</p>
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    <!-- Leaderboard Table -->
+                    <table class="leaderboard-table">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Username</th>
+                                <th>Amount</th>
+                                <th>Level</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reward in rewards %}
+                                <tr>
+                                    <td>{{ forloop.counter }}.</td>
+                                    <td>{{ reward.user.username }}</td>
+                                    <td>{{ reward.total }} L</td>
+                                    <td><span class="level-badge">Level {{ reward.get_level }}</span></td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <div class="pagination">
+                        <span class="pagination-dot active"></span>
+                        <span class="pagination-dot"></span>
+                        <span class="pagination-dot"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <script src="{% static 'rankup.js' %}"></script>
+</body>
+{% endblock content %}

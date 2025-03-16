@@ -28,10 +28,44 @@ def email_save(request):
     return redirect('home')
 
 def home(request):
-    """ Home page: Auth users can log water; non-auth users can only see the daily goal. """
+
+    """ Displays reward leaderboard based on points earned. """
+    user = request.user
+    if not request.session.session_key:
+        request.session.create()
+
+    # Show rewards to all users
+    rewards = SaveGoal.objects.all().order_by('-points')
+    winners = SaveGoal.objects.all().order_by('-points')[0:3]
+    context = {
+        'rewards': rewards,
+        'winners' : winners,
+
+        'water' : 0
+    }
+    if request.user.is_authenticated:
+        dailygoal = UserWaterIntake.objects.filter(user=user).last()
+    else:
+        dailygoal = UserWaterIntake.objects.filter(session_key=request.session.session_key).last()
+    if dailygoal:
+        context.update({
+            'dailygoal' : dailygoal,
+            'water': round(dailygoal.water_amount, 2),
+        })
+    if request.user.is_authenticated:
+        return redirect('rankup')
+    
+    return render(request, 'pages/home.html', context)
+
+
+def rankup_page(request):
+    """ Home page: All users can see rewards and rankings """
     
     if not request.session.session_key:
         request.session.create()
+        
+    rewards = SaveGoal.objects.all().order_by('-points')
+    winners = SaveGoal.objects.all().order_by('-points')[0:3]
 
     user = request.user if request.user.is_authenticated else None
     session_key = request.session.session_key
@@ -80,9 +114,16 @@ def home(request):
         messages.error(request, "Please set a daily water goal first!")
         return redirect('log_water')
 
-    # If the user is not authenticated, show only the daily goal and hide everything else
+    # For non-authenticated users, show rewards and rankings but hide water logging
     if not request.user.is_authenticated:
-        return render(request, 'pages/home.html', {'water': round(dailygoal.water_amount, 2)})
+        context = {
+            'winners': winners,
+            'dailygoal' : dailygoal,
+            'rewards': rewards,
+            'water': round(dailygoal.water_amount, 2),
+            'recap_data': recap_data
+        }
+        return render(request, 'pages/rankup.html', context)
 
     # Fetch logged-in user's water intake
     water_intake = WaterTake.objects.filter(user=user, created_at__date=now().date())
@@ -97,7 +138,7 @@ def home(request):
 
             if amount_liters == 0:
                 messages.error(request, "Invalid cup size.")
-                return redirect('home')
+                return redirect('rankup')
 
             # Save water intake
             WaterTake.objects.create(user=user, cup=cup, amount_liters=amount_liters)
@@ -117,36 +158,22 @@ def home(request):
                 savegoal.save()
 
                 messages.success(request, f"Goal completed! 🎉 You earned {savegoal.points} points.")
-                return redirect('home')
+                return redirect('rankup')
 
     else:
         form = GoalWaterForm()
 
     water_left = max(dailygoal.water_amount - total_intake, 0)
 
-    """ Displays reward leaderboard based on points earned. """
-    watertake = WaterTake.objects.filter(user=request.user)
-    total_intake = sum(entry.amount_liters for entry in watertake)
-    dailygoal = UserWaterIntake.objects.filter(user=request.user).last()
-    
-    if not dailygoal:
-        messages.error(request, "Please set a daily water goal first!")
-        return redirect('log_water')
-
-    water_remaining = round(dailygoal.water_amount - total_intake, 2)
-    rewards = SaveGoal.objects.all().order_by('-points')
-    
     context = {
         'form': form, 
+        'winners' : winners,
+        'rewards': rewards,
         'water': round(dailygoal.water_amount, 2),
         'water_left': round(water_left, 2),
         'recap_data': recap_data,
-        'rewards': rewards, "take": water_remaining
     }
-    return render(request, 'pages/home.html', context)
-
-
-
+    return render(request, 'pages/rankup.html', context)
 
 def log_water(request):
     """Logs user's water intake goal based on ML prediction."""
@@ -170,67 +197,75 @@ def log_water(request):
     if request.method == 'POST':
         form = WaterIntakeForm(request.POST)
         if form.is_valid():
-            # Extract profile data (fixed)
-            if profile:
-                weight = profile.weight
-                gender = 0 if profile.gender == 'male' else 1
-                age = profile.age
-            else:
-                weight = form.cleaned_data['weight']
-                gender = 0 if form.cleaned_data['gender'] == 'male' else 1
-                age = form.cleaned_data['age']
+            try:
+                # Extract profile data (fixed)
+                if profile:
+                    weight = profile.weight
+                    gender = 0 if profile.gender == 'male' else 1
+                    age = profile.age
+                else:
+                    weight = form.cleaned_data['weight']
+                    gender = 0 if form.cleaned_data['gender'] == 'male' else 1
+                    age = form.cleaned_data['age']
 
-            # Extract form data
-            climate = {'cold': 0, 'temperate': 1, 'hot': 2}[form.cleaned_data['climate']]
-            activity_level = {'sedentary': 0, 'lightly-active': 1, 'moderately-active': 2, 'very-active': 3}[form.cleaned_data['activity_level']]
-            health_conditions = {'none': 0, 'diabetes': 1, 'kidney disease': 2, 'heart disease': 3, 'pregnancy': 4}[form.cleaned_data['health_conditions']]
+                # Extract form data
+                climate = {'cold': 0, 'temperate': 1, 'hot': 2}[form.cleaned_data['climate']]
+                activity_level = {'sedentary': 0, 'lightly-active': 1, 'moderately-active': 2, 'very-active': 3}[form.cleaned_data['activity_level']]
+                health_conditions = {'none': 0, 'diabetes': 1, 'kidney disease': 2, 'heart disease': 3, 'pregnancy': 4}[form.cleaned_data['health_conditions']]
 
-            # Prepare input data for prediction
-            input_data = np.array([[weight, gender, climate, activity_level, age, health_conditions]], dtype=np.float32)
-            columns = ['weight', 'gender', 'climate', 'activity_level', 'age', 'health_conditions']
-            input_df = pd.DataFrame(input_data, columns=columns)
+                # Prepare input data for prediction
+                input_data = np.array([[weight, gender, climate, activity_level, age, health_conditions]], dtype=np.float32)
+                columns = ['weight', 'gender', 'climate', 'activity_level', 'age', 'health_conditions']
+                input_df = pd.DataFrame(input_data, columns=columns)
 
-            # If the model requires scaling, apply the scaler
-            # Uncomment the following line if you have a scaler saved
-            # scaled_data = scaler.transform(input_df)
+                # If the model requires scaling, apply the scaler
+                # Uncomment the following line if you have a scaler saved
+                # scaled_data = scaler.transform(input_df)
 
-            # Perform the prediction
-            predicted_water = model.predict(input_df)[0]
+                # Perform the prediction
+                predicted_water = model.predict(input_df)[0]
 
-            # Save new data entry into CSV
-            new_entry = pd.DataFrame([{
-                'gender': gender,
-                'age': age,
-                'weight': weight,
-                'climate': climate,
-                'health_conditions': health_conditions,
-                'lightly-active': activity_level,
-            }])
-            new_entry.to_csv('hydration_data.csv', mode='a', header=False, index=False)
+                # Save new data entry into CSV
+                new_entry = pd.DataFrame([{
+                    'gender': gender,
+                    'age': age,
+                    'weight': weight,
+                    'climate': climate,
+                    'health_conditions': health_conditions,
+                    'lightly-active': activity_level,
+                }])
+                new_entry.to_csv('hydration_data.csv', mode='a', header=False, index=False)
 
-            # Ensure session is created
-            if not request.session.session_key:
-                request.session.create()
+                # Ensure session is created
+                if not request.session.session_key:
+                    request.session.create()
 
-            # Save the prediction to the database
-            if request.user.is_authenticated:
-                UserWaterIntake.objects.create(
-                    user=request.user,
-                    water_amount=predicted_water,
-                    email_frequency=form.cleaned_data['email_frequency']
-                )
-            else:
-                UserWaterIntake.objects.create(
-                    session_key=request.session.session_key,
-                    water_amount=predicted_water,
-                    email_frequency=form.cleaned_data['email_frequency']
-                )
+                # Save the prediction to the database
+                if request.user.is_authenticated:
+                    UserWaterIntake.objects.create(
+                        user=request.user,
+                        water_amount=predicted_water,
+                        email_frequency=form.cleaned_data['email_frequency']
+                    )
+                else:
+                    UserWaterIntake.objects.create(
+                        session_key=request.session.session_key,
+                        water_amount=predicted_water,
+                        email_frequency=form.cleaned_data['email_frequency']
+                    )
 
-            return redirect('home')
+                return redirect('home')
+            except Exception as e:
+                messages.error(request, f"Error processing your request: {str(e)}")
         else:
+            messages.error(request, "Please correct the errors in the form.")
             print("Form Errors:", form.errors)  # Debugging
 
     else:
         form = WaterIntakeForm()
 
     return render(request, 'pages/log_water.html', {'form': form})
+
+
+def user_profile(request):
+    return render(request, 'pages/profile.html')

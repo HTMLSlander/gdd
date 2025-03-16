@@ -47,10 +47,16 @@
               </a>
           </div>
           <div class="nav-links">
+              {% if request.user.is_authenticated %}
+              <a href="{% url 'rankup' %}" class="active">Home</a>
+              <a href="{% url 'log_water' %}" class="active">Log Water</a>
+              <a href="{% url 'profile' %}" class="active">Profile</a>
+              {% else %}
               <a href="{% url 'home' %}" class="active">Home</a>
-              <a href="#" class="active">Rankup</a>
+              <a href="{% url 'rankup' %}" class="active">Rankup</a>
               <a href="#video-section" class="active">Tutorial</a>
               <a href="#footer-container" class="active">Contact</a>
+              {% endif %}
           </div>
           {% if request.user.is_authenticated %}
             <div class="auth-buttons">

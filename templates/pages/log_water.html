@@ -6,11 +6,11 @@
 <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 <div class="auth-section">
-  <div class="auth-container">
-    <div class="auth-box">
+  <div class="auth-container" style="padding: 25vh;">
+    <div class="auth-box" style="display:flex; justify-content:  center;">
       <h1 class="auth-title">Track Your Hydration</h1>
       
-      <form class="auth-form" method="POST" id="water-form">
+      <form class="auth-form"  method="POST" id="water-form">
         {% csrf_token %}
 
         {% if not request.user.is_authenticated %}
