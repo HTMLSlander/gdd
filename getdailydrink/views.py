@@ -174,7 +174,6 @@ def rankup_page(request):
         'recap_data': recap_data,
     }
     return render(request, 'pages/rankup.html', context)
-
 def log_water(request):
     """Logs user's water intake goal based on ML prediction."""
     
@@ -201,38 +200,49 @@ def log_water(request):
                 # Extract profile data (fixed)
                 if profile:
                     weight = profile.weight
-                    gender = 0 if profile.gender == 'male' else 1
+                    gender = profile.gender  # Keep gender as a string ('male' or 'female')
                     age = profile.age
                 else:
                     weight = form.cleaned_data['weight']
-                    gender = 0 if form.cleaned_data['gender'] == 'male' else 1
+                    gender = form.cleaned_data['gender']  # Keep gender as a string
                     age = form.cleaned_data['age']
 
                 # Extract form data
-                climate = {'cold': 0, 'temperate': 1, 'hot': 2}[form.cleaned_data['climate']]
-                activity_level = {'sedentary': 0, 'lightly-active': 1, 'moderately-active': 2, 'very-active': 3}[form.cleaned_data['activity_level']]
-                health_conditions = {'none': 0, 'diabetes': 1, 'kidney disease': 2, 'heart disease': 3, 'pregnancy': 4}[form.cleaned_data['health_conditions']]
+                climate = form.cleaned_data['climate']  # 'cold', 'temperate', or 'hot' as string
+                activity_level = form.cleaned_data['activity_level']  # 'sedentary', 'lightly-active', etc., as string
+                health_conditions = form.cleaned_data['health_conditions']  # 'none', 'diabetes', etc., as string
 
-                # Prepare input data for prediction
-                input_data = np.array([[weight, gender, climate, activity_level, age, health_conditions]], dtype=np.float32)
+                # Prepare input data for prediction (using numeric mappings)
+                climate_map = {'cold': 0, 'temperate': 1, 'hot': 2}
+                activity_level_map = {'sedentary': 0, 'lightly-active': 1, 'moderately-active': 2, 'very-active': 3}
+                health_conditions_map = {'none': 0, 'diabetes': 1, 'kidney disease': 2, 'heart disease': 3, 'pregnancy': 4}
+
+                input_data = np.array(
+                    [[
+                    weight, 
+                    0 if gender == 'male' else 1,  # gender as integer (0 or 1)
+                    climate_map[climate], 
+                    activity_level_map[activity_level], 
+                    age, 
+                    health_conditions_map[health_conditions]
+                    ]], 
+                    dtype=np.float32
+                )
+                
                 columns = ['weight', 'gender', 'climate', 'activity_level', 'age', 'health_conditions']
                 input_df = pd.DataFrame(input_data, columns=columns)
-
-                # If the model requires scaling, apply the scaler
-                # Uncomment the following line if you have a scaler saved
-                # scaled_data = scaler.transform(input_df)
 
                 # Perform the prediction
                 predicted_water = model.predict(input_df)[0]
 
-                # Save new data entry into CSV
+                # Save new data entry into CSV (store string representations in the CSV)
                 new_entry = pd.DataFrame([{
-                    'gender': gender,
+                    'gender': gender,  # Save as string ('male' or 'female')
                     'age': age,
                     'weight': weight,
-                    'climate': climate,
-                    'health_conditions': health_conditions,
-                    'lightly-active': activity_level,
+                    'climate': climate,  # Save as string ('cold', 'temperate', etc.)
+                    'health_conditions': health_conditions,  # Save as string
+                    'activity_level': activity_level,  # Save as string
                 }])
                 new_entry.to_csv('hydration_data.csv', mode='a', header=False, index=False)
 
@@ -265,7 +275,6 @@ def log_water(request):
         form = WaterIntakeForm()
 
     return render(request, 'pages/log_water.html', {'form': form})
-
 
 def user_profile(request):
     return render(request, 'pages/profile.html')
