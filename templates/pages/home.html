@@ -1,5 +1,5 @@
 {% extends 'core/base.html' %}
-
+{% load static %}
 {% block content %}
 <body>
 
@@ -11,6 +11,29 @@
                 <p>Stay hydrated and healthy by tracking your daily water intake. Set goals, earn points, and compete with friends.</p>
                 <a href="{% url 'account_signup' %}" class="cta-btn">Get Started</a>
                 <a href="#" class="secondary-btn">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Intelligence Section -->
+    <section class="ai-intelligence-section">
+        <div class="container">
+            <div class="ai-intelligence-grid">
+                <div class="ai-intelligence-content">
+                    <h2>Intelligent Hydration Assistant</h2>
+                    <p class="ai-description">Our advanced AI technology revolutionizes how you track and maintain optimal hydration levels. By analyzing multiple factors including:</p>
+                    <ul class="ai-features-list">
+                        <li>🌡️ Local weather and temperature</li>
+                        <li>💪 Your physical activity levels</li>
+                        <li>⏰ Daily routines and patterns</li>
+                        <li>🎯 Personal health goals</li>
+                        <li>📈 Historical drinking patterns</li>
+                    </ul>
+                    <p class="ai-conclusion">The system creates a personalized hydration plan that adapts in real-time to your changing needs.</p>
+                </div>
+                <div class="ai-intelligence-image">
+                    <img src="{% static 'images/ai-hydration.png' %}" alt="AI Hydration Analysis" class="feature-image">
+                </div>
             </div>
         </div>
     </section>
@@ -46,11 +69,10 @@
             <h2>A simple setup for a healthy habit</h2>
             <div class="video-container">
                 <div class="video-placeholder">
-                    <iframe width="672" height="378" src="https://www.youtube.com/embed/5QReqfBc7a4?si=rGRiIhVgY1nPyClj" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 35px;"></iframe>
+                    <iframe width="682" height="388" src="https://www.youtube.com/embed/gxGAkHZ3hNw?si=NmaW1K0X5_-MlV98" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen style="border-radius: 35px;"></iframe>
                 </div>
             </div>
-            <a  href="{% url 'account_signup' %}" style="margin-top: 30px;">Get Started</a>
-
+            <a href="{% url 'account_signup' %}" class="get-started-link">Get Started</a>
         </div>
     </section>
 
@@ -193,36 +215,14 @@
                         </tr>
                     </thead>
                     <tbody>
+                        {% for reward in rewards %}
                         <tr>
-                            <td>1</td>
-                            <td>Username1</td>
-                            <td>104 points</td>
+                            <td>{{ forloop.counter }}</td>
+                            <td>{{ reward.user.username }}</td>
+                            <td>{{ reward.points }} points</td>
                             <td><span class="level-badge">Level 4</span></td>
                         </tr>
-                        <tr>
-                            <td>2</td>
-                            <td>Username2</td>
-                            <td>97 points</td>
-                            <td><span class="level-badge">Level 4</span></td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td>Username3</td>
-                            <td>85 points</td>
-                            <td><span class="level-badge">Level 3</span></td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td>Username4</td>
-                            <td>79 points</td>
-                            <td><span class="level-badge">Level 3</span></td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td>Username5</td>
-                            <td>72 points</td>
-                            <td><span class="level-badge">Level 3</span></td>
-                        </tr>
+                        {% endfor %}
                     </tbody>
                 </table>
                 <div class="pagination">
@@ -232,10 +232,24 @@
         </div>
     </section>
 
-
-
     <!-- JavaScript -->
     <script src="script.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const circles = document.querySelectorAll('.progress-ring__progress');
+        
+        circles.forEach(circle => {
+            const radius = circle.r.baseVal.value;
+            const circumference = radius * 2 * Math.PI;
+            
+            circle.style.strokeDasharray = `${circumference} ${circumference}`;
+            
+            const percent = parseFloat(circle.dataset.value) || 0;
+            const offset = circumference - (percent / 100 * circumference);
+            circle.style.strokeDashoffset = offset;
+        });
+    });
+    </script>
 </body>
 </html>
 

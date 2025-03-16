@@ -1,6 +1,6 @@
 from django import forms
 from accounts.models import Profile
-from .models import UserWaterIntake, SaveGoal, WaterTake
+from .models import Email, UserWaterIntake, SaveGoal, WaterTake
 
 
 class ProfileForm(forms.ModelForm):
@@ -59,3 +59,10 @@ class GoalWaterForm(forms.ModelForm):
     class Meta:
         model = WaterTake
         fields = ['cup']
+
+
+class EmailSupport(forms.ModelForm):
+    class Meta:
+        model = Email
+        fields = '__all__'
+        

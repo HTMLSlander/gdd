@@ -56,3 +56,9 @@ class SaveGoal(models.Model):
     complete = models.BooleanField(default=False)
     points = models.PositiveIntegerField(default=0)
 
+
+class Email(models.Model):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email

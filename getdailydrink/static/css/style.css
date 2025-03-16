@@ -141,18 +141,22 @@ header {
   position: relative;
   z-index: 1;
   max-width: 600px;
+  animation: fadeIn 1s ease-out;
 }
 
 .hero h1 {
   font-size: 42px;
   margin-bottom: 20px;
   line-height: 1.2;
+  opacity: 0;
+  animation: slideUp 0.8s ease-out forwards;
 }
 
 .hero p {
   font-size: 18px;
   margin-bottom: 30px;
-  opacity: 0.9;
+  opacity: 0;
+  animation: slideUp 0.8s ease-out 0.2s forwards;
 }
 
 .cta-btn {
@@ -166,6 +170,8 @@ header {
   margin-right: 15px;
   border: none;
   cursor: pointer;
+  opacity: 0;
+  animation: slideUp 0.8s ease-out 0.4s forwards;
 }
 
 .secondary-btn {
@@ -177,6 +183,8 @@ header {
   text-decoration: none;
   display: inline-block;
   border: 1px solid white;
+  opacity: 0;
+  animation: slideUp 0.8s ease-out 0.4s forwards;
 }
 
 /* Wave Section */
@@ -195,6 +203,7 @@ header {
   height: 300px;
   background: linear-gradient(45deg, #ff5e00, #ff0062);
   clip-path: polygon(0 70%, 100% 40%, 100% 100%, 0% 100%);
+  animation: waveFlow 15s ease-in-out infinite;
 }
 
 .stats-container {
@@ -213,7 +222,14 @@ header {
   text-align: center;
   width: 180px;
   margin: 10px;
+  opacity: 0;
+  animation: scaleIn 0.5s ease-out forwards;
 }
+
+.stat-card:nth-child(1) { animation-delay: 0.1s; }
+.stat-card:nth-child(2) { animation-delay: 0.2s; }
+.stat-card:nth-child(3) { animation-delay: 0.3s; }
+.stat-card:nth-child(4) { animation-delay: 0.4s; }
 
 .stat-card h3 {
   font-size: 24px;
@@ -244,6 +260,13 @@ header {
   background-color: rgba(255, 255, 255, 0.1);
   padding: 20px;
   border-radius: 10px;
+  opacity: 0;
+  animation: scaleIn 0.8s ease-out forwards;
+  transition: transform 0.3s ease;
+}
+
+.video-container:hover {
+  transform: scale(1.02);
 }
 
 .video-placeholder {
@@ -253,6 +276,51 @@ header {
   align-items: center;
   justify-content: center;
   border-radius: 5px;
+}
+
+/* Video Section Link Styling */
+.video-section .get-started-link {
+  display: inline-block;
+  margin-top: 30px;
+  padding: 12px 30px;
+  background: linear-gradient(45deg, #ff5e00, #ff0062);
+  color: white;
+  text-decoration: none;
+  border-radius: 30px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 4px 15px rgba(255, 94, 0, 0.2);
+}
+
+.video-section .get-started-link:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 6px 20px rgba(255, 94, 0, 0.3);
+}
+
+.video-section .get-started-link:active {
+  transform: translateY(-1px);
+}
+
+.video-section .get-started-link::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
+  transition: 0.5s;
+}
+
+.video-section .get-started-link:hover::before {
+  left: 100%;
 }
 
 /* Leaderboard Section */
@@ -317,6 +385,7 @@ header {
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 12px;
+  animation: pulse 2s infinite;
 }
 
 .pagination {
@@ -362,6 +431,8 @@ header {
   text-decoration: none;
   display: inline-block;
   font-weight: bold;
+  opacity: 0;
+  animation: slideUp 0.8s ease-out 0.4s forwards;
 }
 
 .drink-circles {
@@ -383,7 +454,18 @@ header {
   justify-content: center;
   color: #0a0a0a;
   position: relative;
+  opacity: 0;
+  animation: scaleIn 0.5s ease-out forwards;
+  transition: transform 0.3s ease;
 }
+
+.drink-circle:hover {
+  transform: translateY(-10px);
+}
+
+.drink-circle:nth-child(1) { animation-delay: 0.1s; }
+.drink-circle:nth-child(2) { animation-delay: 0.2s; }
+.drink-circle:nth-child(3) { animation-delay: 0.3s; }
 
 .drink-circle h3 {
   font-size: 24px;
@@ -446,6 +528,13 @@ header {
   padding: 20px;
   border-radius: 10px;
   text-align: center;
+  opacity: 0;
+  animation: scaleIn 0.5s ease-out forwards;
+  transition: transform 0.3s ease;
+}
+
+.position-card:hover {
+  transform: translateY(-10px);
 }
 
 .position-card.first {
@@ -454,10 +543,12 @@ header {
 
 .position-card.second {
   background-color: rgba(192, 192, 192, 0.2);
+  animation-delay: 0.1s;
 }
 
 .position-card.third {
   background-color: rgba(205, 127, 50, 0.2);
+  animation-delay: 0.2s;
 }
 
 .position-card h3 {
@@ -506,11 +597,12 @@ footer {
   color: rgba(255, 255, 255, 0.7);
   text-decoration: none;
   font-size: 14px;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease, transform 0.3s ease;
 }
 
 .footer-links a:hover {
   color: white;
+  transform: translateX(5px);
 }
 
 .social-links {
@@ -526,7 +618,7 @@ footer {
 }
 
 .social-links a:hover {
-  transform: translateY(-3px);
+  transform: translateY(-5px) rotate(5deg);
 }
 
 .newsletter-form {
@@ -932,3 +1024,529 @@ input:checked + .slider:before {
       padding: 12px;
   }
 }
+
+/* AI Intelligence Section */
+.ai-intelligence-section {
+  padding: 100px 0;
+  background-color: #0a0a0a;
+}
+
+.ai-intelligence-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 50px;
+  align-items: center;
+}
+
+.ai-intelligence-content h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+}
+
+.ai-description {
+  font-size: 16px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.ai-features-list {
+  list-style: none;
+  margin-bottom: 20px;
+}
+
+.ai-features-list li {
+  margin-bottom: 15px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 16px;
+}
+
+.ai-conclusion {
+  font-size: 16px;
+  opacity: 0.9;
+}
+
+.ai-intelligence-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.feature-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: 20px;
+  animation: float 6s ease-in-out infinite;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+@keyframes float {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
+.ai-features-list li {
+  opacity: 0;
+  transform: translateX(-20px);
+  animation: fadeInRight 0.5s ease forwards;
+}
+
+.ai-features-list li:nth-child(1) { animation-delay: 0.1s; }
+.ai-features-list li:nth-child(2) { animation-delay: 0.2s; }
+.ai-features-list li:nth-child(3) { animation-delay: 0.3s; }
+.ai-features-list li:nth-child(4) { animation-delay: 0.4s; }
+.ai-features-list li:nth-child(5) { animation-delay: 0.5s; }
+
+@keyframes fadeInRight {
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.feature-image:hover {
+  transform: scale(1.05);
+}
+
+/* Add this to your existing media queries section */
+@media (max-width: 768px) {
+  .ai-intelligence-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .ai-intelligence-content {
+    text-align: center;
+  }
+
+  .ai-features-list li {
+    justify-content: center;
+  }
+}
+
+/* Global Animation Utilities */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Leaderboard Animations */
+.leaderboard-table tr {
+  opacity: 0;
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.leaderboard-table tr:nth-child(1) { animation-delay: 0.1s; }
+.leaderboard-table tr:nth-child(2) { animation-delay: 0.2s; }
+.leaderboard-table tr:nth-child(3) { animation-delay: 0.3s; }
+.leaderboard-table tr:nth-child(4) { animation-delay: 0.4s; }
+.leaderboard-table tr:nth-child(5) { animation-delay: 0.5s; }
+
+/* Dashboard Circle Animations */
+.drink-circle {
+  opacity: 0;
+  animation: scaleIn 0.5s ease-out forwards;
+  transition: transform 0.3s ease;
+}
+
+.drink-circle:hover {
+  transform: translateY(-10px);
+}
+
+.drink-circle:nth-child(1) { animation-delay: 0.1s; }
+.drink-circle:nth-child(2) { animation-delay: 0.2s; }
+.drink-circle:nth-child(3) { animation-delay: 0.3s; }
+
+/* Position Cards Animation */
+.position-card {
+  opacity: 0;
+  animation: scaleIn 0.5s ease-out forwards;
+  transition: transform 0.3s ease;
+}
+
+.position-card:hover {
+  transform: translateY(-10px);
+}
+
+.position-card.second { animation-delay: 0.1s; }
+.position-card.first { animation-delay: 0.2s; }
+.position-card.third { animation-delay: 0.3s; }
+
+/* Wave Animation */
+@keyframes waveFlow {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-25%); }
+  100% { transform: translateX(0); }
+}
+
+.wave {
+  animation: waveFlow 15s ease-in-out infinite;
+}
+
+/* Button Hover Effects */
+.cta-btn, .track-btn, .get-started-btn {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cta-btn:hover, .track-btn:hover, .get-started-btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 5px 15px rgba(255, 94, 0, 0.3);
+}
+
+/* Navigation Link Hover Effect */
+.nav-links a {
+  position: relative;
+  transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(45deg, #ff5e00, #ff0062);
+  transition: width 0.3s ease;
+}
+
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Scroll-triggered animations */
+@keyframes slideInFromLeft {
+  from {
+    opacity: 0;
+    transform: translateX(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes slideInFromRight {
+  from {
+    opacity: 0;
+    transform: translateX(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+/* Add these classes to elements you want to animate on scroll */
+.slide-in-left {
+  opacity: 0;
+  animation: slideInFromLeft 0.5s ease-out forwards;
+}
+
+.slide-in-right {
+  opacity: 0;
+  animation: slideInFromRight 0.5s ease-out forwards;
+}
+
+/* Level Badge Animation */
+@keyframes pulse {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+  100% { transform: scale(1); }
+}
+
+/* Video Container Animation */
+.video-container:hover {
+  transform: scale(1.02);
+}
+
+/* Footer Link Animations */
+.footer-links a:hover {
+  transform: translateX(5px);
+}
+
+/* Social Links Animation */
+.social-links a:hover {
+  transform: translateY(-5px) rotate(5deg);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(45deg, #ff5e00, #ff0062);
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(45deg, #ff0062, #ff5e00);
+}
+
+/* Loading States */
+.loading {
+  position: relative;
+  overflow: hidden;
+}
+
+.loading::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.1),
+    transparent
+  );
+  animation: loadingShimmer 1.5s infinite;
+}
+
+@keyframes loadingShimmer {
+  0% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Form Feedback Animations */
+.form-group {
+  position: relative;
+}
+
+.form-feedback {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.form-success .form-feedback {
+  color: #4CAF50;
+  opacity: 1;
+}
+
+.form-error .form-feedback {
+  color: #f44336;
+  opacity: 1;
+}
+
+/* Success/Error Messages */
+.message {
+  padding: 15px 20px;
+  border-radius: 8px;
+  margin: 10px 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  animation: slideIn 0.3s ease-out;
+}
+
+.success-message {
+  background: rgba(76, 175, 80, 0.1);
+  border: 1px solid rgba(76, 175, 80, 0.3);
+  color: #4CAF50;
+}
+
+.error-message {
+  background: rgba(244, 67, 54, 0.1);
+  border: 1px solid rgba(244, 67, 54, 0.3);
+  color: #f44336;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Enhanced Mobile Menu Transitions */
+.mobile-menu {
+  transform: translateY(-20px);
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.mobile-menu.active {
+  transform: translateY(0);
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Accessibility Improvements */
+:focus {
+  outline: 2px solid #ff5e00;
+  outline-offset: 2px;
+}
+
+.skip-link {
+  position: absolute;
+  top: -40px;
+  left: 0;
+  background: #ff5e00;
+  color: white;
+  padding: 8px;
+  z-index: 100;
+  transition: top 0.3s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* Interactive Data Visualizations */
+.progress-circle {
+  position: relative;
+  width: 150px;
+  height: 150px;
+}
+
+.progress-circle svg {
+  transform: rotate(-90deg);
+}
+
+.progress-circle circle {
+  fill: none;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.progress-circle .background {
+  stroke: rgba(255, 255, 255, 0.1);
+}
+
+.progress-circle .progress {
+  stroke: url(#gradient);
+  stroke-dasharray: 440;
+  stroke-dashoffset: 440;
+  transition: stroke-dashoffset 1s ease;
+}
+
+/* Progressive Image Loading */
+.lazy-image {
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  filter: blur(10px);
+}
+
+.lazy-image.loaded {
+  opacity: 1;
+  filter: blur(0);
+}
+
+/* Micro-interactions */
+.interactive-element {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.interactive-element:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.interactive-element:active {
+  transform: translateY(1px) scale(0.98);
+}
+
+/* ARIA-friendly animations */
+@media (prefers-reduced-motion: reduce) {
+  * {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Progress Ring Styles */
+.progress-ring {
+    position: relative;
+    display: inline-block;
+}
+
+.progress-ring__circle {
+    transform: rotate(-90deg);
+    transform-origin: 50% 50%;
+}
+
+.progress-ring__background {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.1);
+    stroke-width: 8;
+}
+
+.progress-ring__progress {
+    fill: none;
+    stroke: url(#gradient);
+    stroke-width: 8;
+    stroke-linecap: round;
+    transition: stroke-dashoffset 0.5s ease;
+}
+
+.progress-ring__text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+
+.progress-ring__text h3 {
+    font-size: 18px;
+    margin: 0;
+    color: white;
+}
+
+.progress-ring__text p {
+    font-size: 12px;
+    margin: 0;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Add this gradient definition to your SVG */

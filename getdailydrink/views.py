@@ -2,7 +2,7 @@ from django.shortcuts import redirect, render
 from django.http import JsonResponse
 import pandas as pd
 from accounts.models import Profile
-from .forms import ProfileForm, WaterIntakeForm, GoalWaterForm
+from .forms import *
 from .models import UserWaterIntake, SaveGoal, WaterTake
 from django.contrib.auth.decorators import login_required
 from django.utils.timezone import now
@@ -10,8 +10,22 @@ import numpy as np
 from django.contrib import messages
 from django.http import HttpResponse
 import joblib
+from datetime import timedelta
 
 model = joblib.load('hydration_model.pkl')
+
+
+def email_save(request):
+    if request.method == 'POST':
+        form = EmailSupport(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'We will give you the last new of App.')
+        else:
+            print(form.errors)
+    else:
+        form = EmailSupport()
+    return redirect('home')
 
 def home(request):
     """ Home page: Auth users can log water; non-auth users can only see the daily goal. """
@@ -25,16 +39,50 @@ def home(request):
     # Fetch user's last daily goal
     if user:
         dailygoal = UserWaterIntake.objects.filter(user=user).last()
+        # Get today's water intake
+        today_intake = WaterTake.objects.filter(
+            user=user, 
+            created_at__date=now().date()
+        )
+        today_total = sum(entry.amount_liters for entry in today_intake)
+
+        # Get this week's water intake
+        week_intake = WaterTake.objects.filter(
+            user=user,
+            created_at__date__gte=now().date() - timedelta(days=7)
+        )
+        week_total = sum(entry.amount_liters for entry in week_intake)
+
+        # Get this month's water intake
+        month_intake = WaterTake.objects.filter(
+            user=user,
+            created_at__date__gte=now().date() - timedelta(days=30)
+        )
+        month_total = sum(entry.amount_liters for entry in month_intake)
+
+        # Calculate weekly and monthly goals
+        weekly_goal = dailygoal.water_amount * 7 if dailygoal else 0
+        monthly_goal = dailygoal.water_amount * 30 if dailygoal else 0
+
+        recap_data = {
+            'today_total': round(today_total, 1),
+            'today_goal': round(dailygoal.water_amount if dailygoal else 0, 1),
+            'week_total': round(week_total, 1),
+            'week_goal': round(weekly_goal, 1),
+            'month_total': round(month_total, 1),
+            'month_goal': round(monthly_goal, 1),
+        }
     else:
         dailygoal = UserWaterIntake.objects.filter(session_key=session_key).last()
+        recap_data = None
     
     if not dailygoal:
         messages.error(request, "Please set a daily water goal first!")
-
+        return redirect('log_water')
 
     # If the user is not authenticated, show only the daily goal and hide everything else
     if not request.user.is_authenticated:
-        return render(request, 'pages/home.html', {'water': round( dailygoal.water_amount, 2)})
+        return render(request, 'pages/home.html', {'water': round(dailygoal.water_amount, 2)})
 
     # Fetch logged-in user's water intake
     water_intake = WaterTake.objects.filter(user=user, created_at__date=now().date())
@@ -56,7 +104,10 @@ def home(request):
             total_intake += amount_liters
 
             # Get or create SaveGoal
-            savegoal, _ = SaveGoal.objects.get_or_create(user=user, defaults={"water_intake": dailygoal})
+            savegoal, _ = SaveGoal.objects.get_or_create(
+                user=user, 
+                defaults={"water_intake": dailygoal}
+            )
             
             # Check if goal is complete
             if total_intake >= dailygoal.water_amount:
@@ -65,9 +116,6 @@ def home(request):
                 savegoal.water_intake = dailygoal
                 savegoal.save()
 
-                # Clear today's water intake
-                WaterTake.objects.filter(user=user).delete()
-                
                 messages.success(request, f"Goal completed! 🎉 You earned {savegoal.points} points.")
                 return redirect('home')
 
@@ -76,14 +124,6 @@ def home(request):
 
     water_left = max(dailygoal.water_amount - total_intake, 0)
 
-    return render(request, 'pages/home.html', {
-        'form': form, 
-        'water': round(dailygoal.water_amount, 2),
-        'water_left': round(water_left, 2),
-    })
-
-@login_required
-def rewards(request):
     """ Displays reward leaderboard based on points earned. """
     watertake = WaterTake.objects.filter(user=request.user)
     total_intake = sum(entry.amount_liters for entry in watertake)
@@ -96,7 +136,16 @@ def rewards(request):
     water_remaining = round(dailygoal.water_amount - total_intake, 2)
     rewards = SaveGoal.objects.all().order_by('-points')
     
-    return render(request, 'pages/reward.html', {'rewards': rewards, "take": water_remaining})
+    context = {
+        'form': form, 
+        'water': round(dailygoal.water_amount, 2),
+        'water_left': round(water_left, 2),
+        'recap_data': recap_data,
+        'rewards': rewards, "take": water_remaining
+    }
+    return render(request, 'pages/home.html', context)
+
+
 
 
 def log_water(request):

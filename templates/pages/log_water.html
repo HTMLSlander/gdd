@@ -3,114 +3,95 @@
 
 {% block content %}
 
-<script src="https://unpkg.com/@tailwindcss/browser@4"></script>
-<div class="flex justify-center align-center">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
 
-  <div class="container mx-auto px-4 py-12">
-    <div class="max-w-2xl mx-auto bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
-      <h1 class="text-3xl font-bold text-gray-900 mb-8 text-center">Water Intake Quiz</h1>
+<div class="auth-section">
+  <div class="auth-container">
+    <div class="auth-box">
+      <h1 class="auth-title">Track Your Hydration</h1>
       
-      <form class="space-y-8" method="POST" id="water-form">
+      <form class="auth-form" method="POST" id="water-form">
         {% csrf_token %}
-  
+
         {% if not request.user.is_authenticated %}
-          <div class="question-group">
-            <label class="block text-lg font-semibold text-gray-700 mb-4" for="activity-level">
-              What is your gender?
-            </label>
-            <div class="flex justify-center">
-              {{ form.gender }}
-            </div>
+          <div class="form-group">
+            <label for="gender">Gender</label>
+            {{ form.gender }}
           </div>
           
-          <div class="question-group">
-              <label class="block text-lg font-semibold text-gray-700 mb-4" for="activity-level">
-                What is your age?
-              </label>
-            <div class="flex justify-center">{{ form.age }}</div>
+          <div class="form-group">
+            <label for="age">Age</label>
+            {{ form.age }}
           </div>
-          <div class="question-group">
-            <label class="block text-lg font-semibold text-gray-700 mb-4" for="activity-level">
-              What is your weight?
-            </label>
-            <div class="flex justify-center">{{ form.weight }}</div>
+          
+          <div class="form-group">
+            <label for="weight">Weight (kg)</label>
+            {{ form.weight }}
           </div>
         {% endif %}
-        <div class="question-group">
-          <label class="block text-lg font-semibold text-gray-700 mb-4" for="activity-level">
-            What is your activity level?
-          </label>
-          <div class="flex justify-center">
+        
+        <div class="form-group">
+          <label for="activity-level">Activity Level</label>
           {{ form.activity_level }}
-          </div>
         </div>
-  
-        <div class="question-group">
-          <label class="block text-lg font-semibold text-gray-700 mb-4" for="climate">
-            What is the climate like where you live?
-          </label>
-          <div class="flex justify-center">
-            {{ form.climate }}
-            </div>
+
+        <div class="form-group">
+          <label for="climate">Climate</label>
+          {{ form.climate }}
         </div>
-  
-        <div class="question-group">
-          <label class="block text-lg font-semibold text-gray-700 mb-4" for="health-conditions">
-            Do you have any health conditions?
-          </label>
-          <div class="flex justify-center">
-            {{ form.health_conditions }}
-          </div>
-          
+
+        <div class="form-group">
+          <label for="health-conditions">Health Conditions</label>
+          {{ form.health_conditions }}
         </div>
-  
-        <div class="question-group">
-          <label class="block text-lg font-semibold text-gray-700 mb-4" for="reminder-interval">
-            How often do you want a reminder?
-          </label>
-          <select id="reminder-interval" name="email_frequency"
-                  class="w-full rounded-lg border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500">
-            <option value="1">Every 1 hour</option>
+
+        <div class="form-group">
+          <label for="reminder-interval">Reminder Frequency</label>
+          <select id="reminder-interval" name="email_frequency" class="form-input">
+            <option value="1">Every hour</option>
             <option value="2">Every 2 hours</option>
             <option value="4">Every 4 hours</option>
             <option value="6">Every 6 hours</option>
             <option value="12">Every 12 hours</option>
-            <option value="24">Every one day</option>
+            <option value="24">Daily</option>
           </select>
         </div>
-  
-        <div class="flex space-x-4 justify-center mt-8">
-          <button type="submit" onclick="startWaterReminder()" 
-                  class="inline-flex items-center px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition duration-200">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"/>
-            </svg>
-            Start Reminder
-          </button>
-          
-          <button type="submit" 
-                  class="inline-flex items-center px-6 py-3 bg-primary-500 hover:bg-primary-600 text-white font-semibold rounded-full shadow-md hover:shadow-lg transition duration-200">
-            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-            </svg>
-            Submit
-          </button>
+
+        <div class="auth-buttons">
+          <button type="submit" class="cta-btn">Calculate & Start Tracking</button>
         </div>
       </form>
     </div>
   </div>
-  
-  <script>
-    function startWaterReminder() {
-        let interval = document.getElementById("reminder-interval").value;
-        alert(`Water reminder set for every ${interval} hour(s)!`);
-        
-        // Example: Setting a simple JS timeout (you may use Notification API)
-        setInterval(() => {
-            alert("Time to drink water! 💧");
-        }, interval * 60 * 60 * 1000); // Convert hours to milliseconds
-    }
-  </script>
 </div>
+
+<script>
+  function startWaterReminder() {
+    const interval = document.getElementById("reminder-interval").value;
+    const hours = interval === "1" ? "hour" : "hours";
+    
+    // Show notification using the site's design
+    const notification = document.createElement("div");
+    notification.className = "notification";
+    notification.textContent = `Water reminder set for every ${interval} ${hours}`;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.remove();
+    }, 3000);
+    
+    // Set up the reminder
+    setInterval(() => {
+      const notification = document.createElement("div");
+      notification.className = "notification";
+      notification.innerHTML = "Time to drink water! 💧";
+      document.body.appendChild(notification);
+      
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }, interval * 60 * 60 * 1000);
+  }
+</script>
 
 {% endblock content %}

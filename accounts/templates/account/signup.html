@@ -13,34 +13,33 @@
             <div class="auth-right">
                 <div class="auth-form-container">
                     <h2>Create a Get Daily Drink Account</h2>
-                    <form class="auth-form" id="signup-form">
+                    <form method="post" class="auth-form" id="signup-form">
                         {% csrf_token %}
 
                         <div class="form-group">
                             <input name="username" type="text" id="email" placeholder="Email or username" required>
                         </div>
-                        <div class="form-group">
-                            <div class="verification-group">
-                                <input type="text" id="verification" placeholder="Verification code" required>
-                                <button type="button" class="send-btn">Send</button>
-                            </div>
-                        </div>
+
                         <div class="form-group">
                             <input type="password" name="password1" id="password" placeholder="Password" required>
                         </div>
                         <div class="form-group">
                             <input type="password" name="password2" id="confirm-password" placeholder="Confirm password" required>
                         </div>
+                        <button type="submit" class="cta-btn" style="width: 100%; margin-top: 20px;">Sign up</button>
                         
                         <div class="auth-divider">
                             <span>Or</span>
                         </div>
+                        {% load socialaccount %}
                         
                         <div class="social-auth">
                             <button type="button" class="google-auth">
-                                <i class="fab fa-google"></i>
-                                Continue with Google
-                            </button>
+                                <a href="{% provider_login_url 'google' %}" style="color: white;" class="google-auth">
+                                    <i class="fab fa-google"></i>
+                                    Continue with Google
+                                </a>
+                                </button>
                             <button type="button" class="apple-auth">
                                 <i class="fab fa-apple"></i>
                                 Continue with Apple
