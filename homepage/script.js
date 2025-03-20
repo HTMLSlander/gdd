@@ -81,7 +81,7 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         });
 
         // Close mobile menu if open
-        if (mobileMenu.className !== "mobile-menu") {
+        if (mobileMenu && mobileMenu.className !== "mobile-menu") {
           mobileMenu.classList.remove("mobile-menu-show");
           mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
         }
@@ -90,18 +90,15 @@ document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
   });
 });
 
-// Initialize mobile menu as hidden
-// if (mobileMenu) {
-//   mobileMenu.style.display = "none";
-// }
-
 // Scroll event for navbar transparency effect
 window.addEventListener("scroll", function () {
   const header = document.querySelector(".header-container");
-  if (window.scrollY > 50) {
-    header.classList.add("nav-scroll");
-  } else {
-    header.classList.remove("nav-scroll");
+  if (header) {
+    if (window.scrollY > 50) {
+      header.classList.add("nav-scroll");
+    } else {
+      header.classList.remove("nav-scroll");
+    }
   }
 });
 
@@ -120,26 +117,43 @@ if (appleAuth) {
   });
 }
 
-const slider = document.querySelector(".slider");
-const screen = document.querySelector(".screen");
-let isScrolling = false;
+// Theme toggle functionality
+document.addEventListener("DOMContentLoaded", function() {
+  const themeToggleCheckbox = document.getElementById("theme-toggle-checkbox");
+  
+  if (themeToggleCheckbox) {
+    // Check if there's a saved theme preference in localStorage
+    const savedTheme = localStorage.getItem("theme");
+    
+    // Apply the saved theme or default to light
+    if (savedTheme === "dark") {
+      document.body.classList.add("dark-theme");
+      themeToggleCheckbox.checked = true;
+    }
+    
+    // Add event listener for theme toggle
+    themeToggleCheckbox.addEventListener("change", function() {
+      if (this.checked) {
+        document.body.classList.add("dark-theme");
+        localStorage.setItem("theme", "dark");
+      } else {
+        document.body.classList.remove("dark-theme");
+        localStorage.setItem("theme", "light");
+      }
+    });
+  }
+});
 
-// Scroll event listener
-screen.addEventListener("scroll", () => {
-  if (!isScrolling) {
-    isScrolling = true;
+// Initialize badge animations
+document.addEventListener("DOMContentLoaded", function() {
+  const badges = document.querySelectorAll(".badge-container");
+  
+  if (badges.length > 0) {
+    // Add the 'filled' class to badges after a short delay
     setTimeout(() => {
-      const scrollPosition = screen.scrollTop;
-      const slideHeight = screen.clientHeight;
-      const currentSlide = Math.round(scrollPosition / slideHeight);
-
-      // Snap to the nearest slide
-      screen.scrollTo({
-        top: currentSlide * slideHeight,
-        behavior: "smooth",
+      badges.forEach(badge => {
+        badge.classList.add("filled");
       });
-
-      isScrolling = false;
-    }, 100); // Adjust the delay for smoother snapping
+    }, 500);
   }
 });
