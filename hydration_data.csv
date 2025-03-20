@@ -1,9 +1,203 @@
-gender,weight,age,activity_level,climate,health_conditions,base_water
-male,70,25,moderately,temperate,none,2.5
-male,17,57,sedentary,temperate,none,2.5
-female,60,30,lightly-active,hot,none,2.2
-male,80,40,very-active,cold,heart disease,3.0
-female,17,55,lightly-active,temperate,none,2.7
-female,35,66,very-active,hot,none,2.7
-male,40,76,sedentary,temperate,pregnancy,2.7
-female,17,53,temperate,none,sedentary
+{% extends 'core/base.html' %}
+
+{% block content %}
+    <!-- Main Content -->
+    <main>
+      <!-- Track Section -->
+      <section class="dashboard-section">
+        <div class="container">
+          <div class="dashboard-header">
+            <h2>
+              Your current
+              <div class="badge-container">
+                <div class="badge-background"></div>
+                <span class="badge-text">track</span>
+              </div>
+            </h2>
+            <a href="#" class="cta-btn">Trigger to position</a>
+          </div>
+          <div class="drink-circles">
+            <div class="drink-circle">
+              <span class="drink-label">Daily drink</span>
+              <h3>1.5/X oz</h3>
+            </div>
+            <div class="drink-circle">
+              <span class="drink-label">Weekly drink</span>
+              <h3>1.5/X oz</h3>
+            </div>
+            <div class="drink-circle">
+              <span class="drink-label">Annual drink</span>
+              <h3>1.5/X oz</h3>
+            </div>
+          </div>
+        </div>
+        <div class="wave-anim-container">
+          <div class="wave-anim-wrapper">
+            <!-- First wave - Teal (#76C7C0) -->
+            <div class="wave-anim-wave-container">
+              <div class="wave-anim-wave-teal">
+                <svg
+                  viewBox="0 0 1200 120"
+                  preserveAspectRatio="none"
+                  class="wave-anim-svg"
+                >
+                  <path
+                    class="wave-anim-path-teal"
+                    d="M0,0 C150,20 300,40 450,40 C600,40 750,20 900,0 C1050,-20 1200,0 1200,0 V120 H0 V0 Z"
+                  ></path>
+                </svg>
+                <svg
+                  viewBox="0 0 1200 120"
+                  preserveAspectRatio="none"
+                  class="wave-anim-svg-duplicate"
+                >
+                  <path
+                    class="wave-anim-path-teal"
+                    d="M0,0 C150,20 300,40 450,40 C600,40 750,20 900,0 C1050,-20 1200,0 1200,0 V120 H0 V0 Z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Second wave - Blue (#00A4CC) -->
+            <div class="wave-anim-wave-container">
+              <div class="wave-anim-wave-blue">
+                <svg
+                  viewBox="0 0 1200 120"
+                  preserveAspectRatio="none"
+                  class="wave-anim-svg"
+                >
+                  <path
+                    class="wave-anim-path-blue"
+                    d="M0,120 C150,100 300,80 450,80 C600,80 750,100 900,120 C1050,140 1200,120 1200,120 V0 H0 V120 Z"
+                  ></path>
+                </svg>
+                <svg
+                  viewBox="0 0 1200 120"
+                  preserveAspectRatio="none"
+                  class="wave-anim-svg-duplicate"
+                >
+                  <path
+                    class="wave-anim-path-blue"
+                    d="M0,120 C150,100 300,80 450,80 C600,80 750,100 900,120 C1050,140 1200,120 1200,120 V0 H0 V120 Z"
+                  ></path>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Positions Section -->
+      <section class="positions-section">
+        <div class="container">
+          <div class="positions-content">
+            <div class="positions-header">
+              <i class="fas fa-trophy trophy-icon"></i>
+              <h2>Current Positions</h2>
+            </div>
+            <div class="positions-grid">
+              <div class="position-card second">
+                <h3>2nd</h3>
+                <p>Username<br />X oz</p>
+              </div>
+              <div class="position-card first">
+                <h3>1st</h3>
+                <p>Username<br />X oz</p>
+              </div>
+              <div class="position-card third">
+                <h3>3rd</h3>
+                <p>Username<br />X oz</p>
+              </div>
+            </div>
+
+            <!-- Leaderboard Table -->
+            <table class="leaderboard-table">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Username</th>
+                  <th>Amount</th>
+                  <th>Level</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>1.</td>
+                  <td>Username</td>
+                  <td>104 ounces</td>
+                  <td><span class="level-badge">Level X</span></td>
+                </tr>
+                <tr>
+                  <td>2.</td>
+                  <td>Username</td>
+                  <td>97 ounces</td>
+                  <td><span class="level-badge">Level X</span></td>
+                </tr>
+                <tr>
+                  <td>3.</td>
+                  <td>Username</td>
+                  <td>91 ounces</td>
+                  <td><span class="level-badge">Level X</span></td>
+                </tr>
+                <tr>
+                  <td>4.</td>
+                  <td>Username</td>
+                  <td>85 ounces</td>
+                  <td><span class="level-badge">Level X</span></td>
+                </tr>
+                <tr>
+                  <td>5.</td>
+                  <td>Username</td>
+                  <td>72 ounces</td>
+                  <td><span class="level-badge">Level X</span></td>
+                </tr>
+                <tr>
+                  <td>6.</td>
+                  <td>Username</td>
+                  <td>63 ounces</td>
+                  <td><span class="level-badge">Level X</span></td>
+                </tr>
+                <tr>
+                  <td>7.</td>
+                  <td>Username</td>
+                  <td>58 ounces</td>
+                  <td><span class="level-badge">Level X</span></td>
+                </tr>
+              </tbody>
+            </table>
+            <div class="pagination">
+              <span class="pagination-dot active"></span>
+              <span class="pagination-dot"></span>
+              <span class="pagination-dot"></span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+
+{% endblock content %}
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,temperate,none,sedentary
+male,17,57,cold,none,sedentary
+male,11,50,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,very-active
+male,17,57,cold,none,sedentary
+,,,cold,none,sedentary
+male,17,57,hot,pregnancy,very-active
+male,17,57,cold,none,sedentary
+male,17,57,hot,pregnancy,very-active
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary
+male,17,57,cold,none,sedentary

@@ -190,3 +190,10 @@ LOGIN_REDIRECT_URL = "home"
 
 LOGOUT_URL = "logout"
 LOGOUT_REDIRECT_URL = "login"
+
+
+
+CELERY_BROKER_URL = 'redis://default:hvLBSRjoV7PYmKYmOqbD5E3GvonQlcwT@redis-15722.c261.us-east-1-4.ec2.redns.redis-cloud.com:15722/0'
+CELERY_RESULT_BACKEND = 'redis://default:hvLBSRjoV7PYmKYmOqbD5E3GvonQlcwT@redis-15722.c261.us-east-1-4.ec2.redns.redis-cloud.com:15722/0'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'

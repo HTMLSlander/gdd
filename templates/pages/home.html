@@ -10,7 +10,7 @@
                 <h1>Track your daily drinks with a simple tap</h1>
                 <p>Stay hydrated and healthy by tracking your daily water intake. Set goals, earn points, and compete with friends.</p>
                 <a href="{% url 'account_signup' %}" class="cta-btn">Get Started</a>
-                <a href="#" class="secondary-btn">Learn More</a>
+                <a href="{% url 'login' %}" class="secondary-btn">Login</a>
             </div>
         </div>
     </section>
@@ -76,48 +76,19 @@
         </div>
     </section>
 
-    <!-- Leaderboard Section -->
-    <section class="leaderboard-section">
-        <div class="leaderboard-wave"></div>
-        <div class="container">
-            <div class="leaderboard-content">
-                <div class="leaderboard-header">
-                    <div class="trophy-icon">🏆</div>
-                    <h2>Leader points tracking your daily drinks</h2>
-                </div>
-                <table class="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Username</th>
-                            <th>Points</th>
-                            <th>Level</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for reward in rewards %}
-                            <tr>
-                                <td>{{ forloop.counter }}.</td>
-                                <td>{{ reward.user.username }}</td>
-                                <td>{{ reward.total }} L</td>
-                                <td><span class="level-badge">Level {{ reward.get_level }}</span></td>
-                            </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <div class="pagination">
-                    <div class="pagination-dot active"></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
     <!-- Dashboard Section -->
     <section class="dashboard-section" id="dashboard">
         <div class="container">
             <div class="dashboard-header">
                 <h2>Your current track</h2>
-                <a href="{% url 'log_water' %}" class="track-btn">Add a drink</a>
+                <form action="{% url 'log_water' %}" method="post">
+                  <select  class="track-btn" id="quantitySelect" class="form-select">
+                    <option style="background-color: black;; border:gray ;" value="250ml">250ml</option>
+                    <option style="background-color: black;" value="500ml">500ml</option>
+                    <option style="background-color: black;" value="1L">1L</option>
+                  </select>
+                </form>
+              <p>Selected Quantity: <span id="selectedQuantity">250ml</span></p>
             </div>
             <div class="drink-circles">
                 {% if water %}
@@ -157,49 +128,41 @@
         </div>
     </section>
 
-    <!-- Positions Section -->
-    <section class="positions-section">
-        <div class="positions-wave"></div>
-        <div class="container">
-            <div class="positions-content">
-                <div class="positions-header">
-                    <div class="trophy-icon">🏆</div>
-                    <h2>Positions</h2>
-                </div>
-                <div class="positions-grid">
-                    {% for winner in winners %}
-                        <div class="position-card {% if forloop.counter == 1 %} first {% elif forloop.counter == 2 %} second {% elif forloop.counter == 3 %} third {% endif %}">
-                            <h3>{{ forloop.counter }}rd</h3>
-                            <p>{{ winner.user.username }}<br>{{ winner.total }} L</p>
-                        </div>
-                    {% endfor %}
-                </div>
-                <table class="leaderboard-table">
-                    <thead>
-                        <tr>
-                            <th>#</th>
-                            <th>Username</th>
-                            <th>Points</th>
-                            <th>Level</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {% for reward in rewards %}
-                        <tr>
-                            <td>{{ forloop.counter }}</td>
-                            <td>{{ reward.user.username }}</td>
-                            <td>{{ reward.points }} points</td>
-                            <td><span class="level-badge">Level 4</span></td>
-                        </tr>
-                        {% endfor %}
-                    </tbody>
-                </table>
-                <div class="pagination">
-                    <div class="pagination-dot active"></div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- Leaderboard Section -->
+    <section class="leaderboard-section">
+      <div class="leaderboard-wave"></div>
+      <div class="container">
+          <div class="leaderboard-content">
+              <div class="leaderboard-header">
+                  <div class="trophy-icon">🏆</div>
+                  <h2>Leader points tracking your daily drinks</h2>
+              </div>
+              <table class="leaderboard-table">
+                  <thead>
+                      <tr>
+                          <th>#</th>
+                          <th>Username</th>
+                          <th>Points</th>
+                          <th>Level</th>
+                      </tr>
+                  </thead>
+                  <tbody>
+                      {% for reward in rewards %}
+                          <tr>
+                              <td>{{ forloop.counter }}.</td>
+                              <td>{{ reward.user.username }}</td>
+                              <td>{{ reward.total }} L</td>
+                              <td><span class="level-badge">Level {{ reward.get_level }}</span></td>
+                          </tr>
+                      {% endfor %}
+                  </tbody>
+              </table>
+              <div class="pagination">
+                  <div class="pagination-dot active"></div>
+              </div>
+          </div>
+      </div>
+  </section>
 
     <!-- JavaScript -->
     <script src="script.js"></script>
@@ -218,6 +181,44 @@
             circle.style.strokeDashoffset = offset;
         });
     });
+
+    document.getElementById('quantitySelect').addEventListener('change', function() {
+                  let selectedValue = this.value;
+                  
+                  // Update the displayed quantity
+                  document.getElementById('selectedQuantity').textContent = selectedValue;
+              
+                  // Send data to the backend dynamically (using fetch API)
+                  fetch('/update_quantity/', {
+                      method: 'POST',
+                      headers: {
+                          'Content-Type': 'application/json',
+                          'X-CSRFToken': getCookie('csrftoken')  // Ensure CSRF token is included
+                      },
+                      body: JSON.stringify({ quantity: selectedValue })
+                  })
+                  .then(response => response.json())
+                  .then(data => {
+                      console.log('Updated successfully:', data);
+                  })
+                  .catch(error => console.error('Error:', error));
+              });
+              
+              // Function to get CSRF token (needed for Django POST requests)
+              function getCookie(name) {
+                  let cookieValue = null;
+                  if (document.cookie && document.cookie !== '') {
+                      const cookies = document.cookie.split(';');
+                      for (let i = 0; i < cookies.length; i++) {
+                          const cookie = cookies[i].trim();
+                          if (cookie.startsWith(name + '=')) {
+                              cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                              break;
+                          }
+                      }
+                  }
+                  return cookieValue;
+              }
     </script>
 </body>
 </html>

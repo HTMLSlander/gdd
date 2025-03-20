@@ -45,17 +45,15 @@
           {{ form.health_conditions }}
         </div>
 
+        {% if request.user.is_authenticated %}
+
         <div class="form-group">
-          <label for="reminder-interval">Reminder Frequency</label>
-          <select id="reminder-interval" name="email_frequency" class="form-input">
-            <option value="1">Every hour</option>
-            <option value="2">Every 2 hours</option>
-            <option value="4">Every 4 hours</option>
-            <option value="6">Every 6 hours</option>
-            <option value="12">Every 12 hours</option>
-            <option value="24">Daily</option>
-          </select>
+          {{ form.reminder_times }}
+          {{ form.email_frequency }}
+          
         </div>
+
+        {% endif %}
 
         <div class="auth-buttons">
           <button type="submit" class="cta-btn">Calculate & Start Tracking</button>

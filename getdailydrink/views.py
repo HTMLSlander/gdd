@@ -11,6 +11,8 @@ from django.contrib import messages
 from django.http import HttpResponse
 import joblib
 from datetime import timedelta
+from django.core.mail import send_mail
+from django.utils.timezone import localtime
 
 model = joblib.load('hydration_model.pkl')
 
@@ -97,7 +99,7 @@ def rankup_page(request):
         # Calculate weekly and monthly goals
         weekly_goal = dailygoal.water_amount * 7 if dailygoal else 0
         monthly_goal = dailygoal.water_amount * 30 if dailygoal else 0
-
+        
         recap_data = {
             'today_total': round(today_total, 1),
             'today_goal': round(dailygoal.water_amount if dailygoal else 0, 1),
@@ -111,7 +113,7 @@ def rankup_page(request):
         recap_data = None
     
     if not dailygoal:
-        messages.error(request, "Please set a daily water goal first!")
+        messages.error(request, "Please set a daily water goal first!", extra_tags="rankup")
         return redirect('log_water')
 
     # For non-authenticated users, show rewards and rankings but hide water logging
@@ -157,13 +159,19 @@ def rankup_page(request):
                 savegoal.water_intake = dailygoal
                 savegoal.save()
 
-                messages.success(request, f"Goal completed! 🎉 You earned {savegoal.points} points.")
+                messages.success(request, f"Goal completed! 🎉 You earned {savegoal.points} points.", extra_tags="rankup")
+
+                WaterTake.objects.filter(user=request.user, created_at__date=now().date()).delete()
+                total_intake = 0
+
                 return redirect('rankup')
 
     else:
         form = GoalWaterForm()
 
     water_left = max(dailygoal.water_amount - total_intake, 0)
+    week_left = max(weekly_goal - total_intake, 0)
+    month_left = max(monthly_goal - total_intake, 0)
 
     context = {
         'form': form, 
@@ -171,9 +179,13 @@ def rankup_page(request):
         'rewards': rewards,
         'water': round(dailygoal.water_amount, 2),
         'water_left': round(water_left, 2),
+        'week_left' : round(week_left, 2),
+        'month_left' : round(month_left, 2),
         'recap_data': recap_data,
     }
     return render(request, 'pages/rankup.html', context)
+
+
 def log_water(request):
     """Logs user's water intake goal based on ML prediction."""
     
@@ -206,6 +218,7 @@ def log_water(request):
                     weight = form.cleaned_data['weight']
                     gender = form.cleaned_data['gender']  # Keep gender as a string
                     age = form.cleaned_data['age']
+                    # reminder_times = form.cleaned_data.get(['reminder_times'], [])
 
                 # Extract form data
                 climate = form.cleaned_data['climate']  # 'cold', 'temperate', or 'hot' as string
@@ -255,7 +268,8 @@ def log_water(request):
                     UserWaterIntake.objects.create(
                         user=request.user,
                         water_amount=predicted_water,
-                        email_frequency=form.cleaned_data['email_frequency']
+                        email_frequency=form.cleaned_data['email_frequency'],
+                        reminder_times=[f"{int(hour):02d}:00" for hour in form.cleaned_data['reminder_times']],
                     )
                 else:
                     UserWaterIntake.objects.create(

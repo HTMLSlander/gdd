@@ -12,13 +12,10 @@ class UserWaterIntake(models.Model):
     session_key = models.CharField(max_length=500, blank=True, null=True)
     water_amount = models.FloatField(blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
-    email_frequency = models.IntegerField(choices=[
-        (1, 'Every 1 hour'),
-        (2, 'Every 2 hour'),
-        (4, 'Every 4 hour'),
-        (6, 'Every 6 hour'),
-        (12, 'Every 12 hour'),
-        (24, 'Every one day'),
+    reminder_times = models.JSONField(default=list)
+    email_frequency = models.CharField(max_length=50,choices=[
+        ('daily', 'Daily'),
+        ('weekly', 'Weekly'),
     ])
 
     def weekly_drink(self):

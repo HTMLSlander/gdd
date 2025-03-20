@@ -39,14 +39,13 @@ class WaterIntakeForm(forms.Form):
         required=False
     )
     email_frequency = forms.ChoiceField(choices=[
-        (1, 'Every 1 hour'),
-        (2, 'Every 2 hour'),
-        (4, 'Every 4 hour'),
-        (6, 'Every 6 hour'),
-        (12, 'Every 12 hour'),
-        (24, 'Every one day'),
+        ('daily', 'Daily'),
+        ('weekly', 'Weekly'),
     ])
-
+    reminder_times = forms.MultipleChoiceField(
+        choices=[(str(hour), f"{hour}:00") for hour in range(24)],
+        widget=forms.CheckboxSelectMultiple,
+    )
     # Adding widgets for styling and visibility
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

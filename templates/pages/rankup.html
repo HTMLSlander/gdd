@@ -2,40 +2,81 @@
 
 {% load static %}
 {% block content %}
-
 <body>
     <link rel="stylesheet" href="{% static 'css/rankup.css' %}">
     <!-- Main Content -->
     <main>
+
         <!-- Track Section -->
         <section class="dashboard-section">
-            <div class="container">
-                <div class="dashboard-header">
-                    <h2>Your current track</h2>
-                    <a href="{% url 'log_water' %}" class="track-btn">Trigger to position</a>
-                </div>
-                <div class="drink-circles">
-                    <div class="drink-circle">
-                        <span class="drink-label">Daily drink</span>
-                        <h3>{{ water }}/L oz</h3>
+            {% if request.user.is_authenticated %}
+                <div class="container">
+                    <div class="dashboard-header">
+                        {% if complete_message %}
+                        {% for message in complete_message %}
+                            <h2>{{ message }}</h2>
+                        {% endfor %}
+                        {% else %}
+                            <h2>Your current track</h2>
+
+                        {% endif %}
+                        <a href="{% url 'log_water' %}" class="track-btn">Trigger to position</a>
+                        <br><br>
+                        <form id="cupForm" method="post">
+                            {% csrf_token %}
+                            <select name="cup" class="track-btn form-select" id="quantitySelect">
+                                <option style="background-color: black; border:gray;" value="250ml">250ml</option>
+                                <option style="background-color: black;" value="500ml">500ml</option>
+                                <option style="background-color: black;" value="1L">1L</option>
+                            </select>
+                            <br><br>
+                            <p>Selected Quantity: <span id="selectedQuantity">250ml</span></p>
+                            <br>
+                            <button type="submit" class="get-started-btn">add</button>
+                            <br><br>
+                        </form>
                     </div>
-                    {% if request.user.is_authenticated %}
+
+                </div>
+
+                <div class="drink-circles">
+
+                        <div class="drink-circle">
+                            <span class="drink-label">Daily drink</span>
+                                <h3>{{ water_left }}/L oz</h3>
+                        </div>
                         <div class="drink-circle">
                             <span class="drink-label">Weekly drink</span>
-                            <h3>{{ recap_data.week_goal }}/L oz</h3>
+                            <h3>{{ week_left }}/L oz</h3>
                         </div>
                         <div class="drink-circle">
                             <span class="drink-label">Month drink</span>
-                            <h3>{{ recap_data.month_goal }}/L oz</h3>
+                                <h3>{{ month_left }}/L oz</h3>
                         </div>
+                </div>
                     {% else %}
-                        <div class="drink-circle">
-                            <span class="drink-label">Weekly drink</span>
-                            <h3>{{ dailygoal.weekly_drink }}/L oz</h3>
+                        <div class="container">
+
+                        <div class="dashboard-header">
+                            <h2>Your current track</h2>
+                            <a href="{% url 'log_water' %}" class="track-btn">Trigger to position</a>
                         </div>
-                        <div class="drink-circle">
-                            <span class="drink-label">Month drink</span>
-                            <h3>{{ dailygoal.monthly_drink }}/L oz</h3>
+                        <div class="drink-circles">
+
+                            <div class="drink-circle">
+                                <span class="drink-label">Daily drink</span>
+                                    <h3>{{ water }}/L oz</h3>
+                            </div>
+                            <div class="drink-circle">
+                                <span class="drink-label">Weekly drink</span>
+                                <h3>{{ dailygoal.weekly_drink }}/L oz</h3>
+                            </div>
+                            <div class="drink-circle">
+                                <span class="drink-label">Month drink</span>
+                                <h3>{{ dailygoal.monthly_drink }}/L oz</h3>
+                            </div>
+                            </div>
+                        </div>
                         </div>
                     {% endif %}
                 </div>
@@ -90,7 +131,45 @@
             </div>
         </section>
     </main>
+    <script>
+        document.getElementById('quantitySelect').addEventListener('change', function() {
+    let selectedValue = this.value;
+    
+    // Update the displayed quantity
+    document.getElementById('selectedQuantity').textContent = selectedValue;
 
+    // Send data to the backend dynamically using AJAX
+    fetch('{% url "log_water" %}', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken') // CSRF token for security
+        },
+        body: JSON.stringify({ cup: selectedValue })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Cup updated successfully:', data);
+    })
+    .catch(error => console.error('Error:', error));
+});
+
+// Function to get CSRF token (needed for Django POST requests)
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+    </script>
     <script src="{% static 'rankup.js' %}"></script>
 </body>
 {% endblock content %}
