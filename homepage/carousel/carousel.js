@@ -146,6 +146,55 @@ function initCarousel() {
 
   // Add scroll event listener
   carousel.addEventListener("scroll", handleScroll);
+  
+  // Check if dark theme is active and apply it to carousel
+  syncThemeWithPage();
+  
+  // Listen for theme changes
+  document.addEventListener('DOMContentLoaded', function() {
+    const themeToggleCheckbox = document.getElementById("theme-toggle-checkbox");
+    if (themeToggleCheckbox) {
+      themeToggleCheckbox.addEventListener("change", syncThemeWithPage);
+    }
+  });
+  
+  // Also check for theme changes when the page loads
+  window.addEventListener('load', syncThemeWithPage);
+}
+
+// Sync carousel theme with page theme
+function syncThemeWithPage() {
+  // Check if body has dark-theme class or if theme is set to dark in localStorage
+  const isDarkTheme = document.body.classList.contains('dark-theme') || localStorage.getItem('theme') === 'dark';
+  
+  // Apply or remove dark class to carousel elements
+  const carouselContainer = document.querySelector('.carousel-container');
+  const modalElement = document.getElementById('modal');
+  const navButtons = document.querySelectorAll('.nav-button');
+  
+  if (isDarkTheme) {
+    document.querySelectorAll('.carousel-card, .modal-content').forEach(el => {
+      el.classList.add('dark');
+    });
+    if (modalElement) modalElement.classList.add('dark');
+    if (carouselContainer) carouselContainer.classList.add('dark');
+    
+    // Update navigation buttons for dark theme
+    navButtons.forEach(button => {
+      button.classList.add('dark');
+    });
+  } else {
+    document.querySelectorAll('.carousel-card, .modal-content').forEach(el => {
+      el.classList.remove('dark');
+    });
+    if (modalElement) modalElement.classList.remove('dark');
+    if (carouselContainer) carouselContainer.classList.remove('dark');
+    
+    // Update navigation buttons for light theme
+    navButtons.forEach(button => {
+      button.classList.remove('dark');
+    });
+  }
 }
 
 // Update carousel position to center the active card
@@ -241,6 +290,9 @@ function openModal(index) {
   modalBody.appendChild(callToAction);
   modal.style.display = "flex";
   modalContent.classList.add("show");
+  
+  // Apply dark theme to modal if needed
+  syncThemeWithPage();
 }
 
 // Close modal
@@ -268,4 +320,25 @@ initCarousel();
 // Toggle dark mode (optional)
 function toggleDarkMode() {
   document.body.classList.toggle("dark");
+  syncThemeWithPage();
 }
+
+// Listen for theme changes from the main site
+document.addEventListener('DOMContentLoaded', function() {
+  const themeToggleCheckbox = document.getElementById("theme-toggle-checkbox");
+  if (themeToggleCheckbox) {
+    themeToggleCheckbox.addEventListener("change", function() {
+      syncThemeWithPage();
+    });
+    
+    // Initial sync on page load
+    syncThemeWithPage();
+  }
+});
+
+// Also listen for theme changes in localStorage
+window.addEventListener('storage', function(e) {
+  if (e.key === 'theme') {
+    syncThemeWithPage();
+  }
+});

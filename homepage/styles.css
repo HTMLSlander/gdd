@@ -268,7 +268,28 @@ header {
 }
 
 .secondary-btn {
-  background-color: var(--bg-color);
+  background: transparent;
+  color: var(--text-color);
+  padding: 12px 30px;
+  border-radius: 30px;
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  cursor: pointer;
+  border: 1px solid var(--text-color);
+  transition: all 0.4s ease-in-out;
+}
+
+/* Override for the homepage login button in light theme */
+.hero .secondary-btn {
+  color: #000000;
+  border-color: #000000;
+}
+
+/* Make sure the login button is visible in dark theme */
+body.dark-theme .hero .secondary-btn {
+  color: aliceblue;
+  border-color: aliceblue;
 }
 
 .hero-left {
@@ -331,19 +352,6 @@ header {
   color: var(--bg-color);
 
   transform: translateY(-9px);
-}
-
-.secondary-btn {
-  background: transparent;
-  color: var(--text-color);
-  padding: 12px 30px;
-  border-radius: 30px;
-  font-weight: bold;
-  text-decoration: none;
-  display: inline-block;
-  cursor: pointer;
-  border: 1px solid var(--text-color);
-  transition: all 0.4s ease-in-out;
 }
 
 .secondary-btn:hover {
@@ -463,11 +471,7 @@ header {
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(
-    0deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
+  background: linear-gradient(0deg, var(--primary-color), var(--secondary-color));
   clip-path: polygon(0 0, 100% 0, 100% 60%, 0 30%);
   z-index: 0;
 }
@@ -514,11 +518,7 @@ header {
 
 .level-badge {
   color: var(--text-color);
-  background: linear-gradient(
-    45deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
   padding: 5px 10px;
   border-radius: 20px;
   font-size: 12px;
@@ -694,6 +694,10 @@ header {
 footer {
   background-color: var(--footer-bg);
   padding: 50px 0 20px;
+  position: relative;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
 }
 
 .footer-content {
@@ -701,6 +705,7 @@ footer {
   justify-content: space-between;
   margin-bottom: 30px;
   flex-wrap: wrap;
+  flex: 1;
 }
 
 .footer-column {
@@ -765,17 +770,14 @@ footer {
 
 .newsletter-form button {
   padding: 10px 15px;
-  background: linear-gradient(
-    45deg,
-    var(--primary-color),
-    var(--secondary-color)
-  );
+  background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
   border: none;
   border-radius: 0 5px 5px 0;
   color: white;
   cursor: pointer;
 }
 
+/* Update the copyright section to be at the bottom */
 .copyright {
   text-align: center;
   font-size: 14px;
@@ -783,6 +785,17 @@ footer {
   margin-top: 20px;
   padding-top: 20px;
   border-top: 1px solid rgba(255, 255, 255, 0.4);
+  position: relative;
+  bottom: 0;
+  width: 100%;
+}
+
+/* Ensure the container takes up available space */
+#footer-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+  justify-content: space-between;
 }
 
 /* Toggle Switch */
@@ -884,7 +897,7 @@ input:checked + .slider:before {
   margin-left: 20px;
 }
 
-.theme-toggle-label {
+.theme-toggle-btn {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -895,9 +908,11 @@ input:checked + .slider:before {
   padding: 5px;
   cursor: pointer;
   position: relative;
+  border: none;
+  outline: none;
 }
 
-.theme-toggle-label .toggle-ball {
+.theme-toggle-btn .toggle-ball {
   width: 20px;
   height: 20px;
   background-color: white;
@@ -908,40 +923,27 @@ input:checked + .slider:before {
   transition: transform 0.3s ease;
 }
 
-#theme-toggle-checkbox:checked + .theme-toggle-label .toggle-ball {
+.theme-toggle-btn.active .toggle-ball {
   transform: translateX(25px);
 }
 
-#theme-toggle-checkbox {
-  display: none;
-}
-
-.theme-toggle-label i {
+.theme-toggle-btn i {
   font-size: 12px;
   color: white;
   z-index: 2;
 }
 
-body.dark-theme {
-  --bg-color: #1e1e1e;
-  --text-color: #f4f4f9;
-  --primary-color: #ffcb77;
-  --secondary-color: #00a4cc;
-  --accent-color: #76c7c0;
-  --header-bg: rgba(0, 0, 0, 0.7);
-  --footer-bg: #000000;
-  --card-bg: #2a2a2a;
-  --card-text: #f4f4f9;
-  --video-container-bg: #2a2a2a;
-  --table-bg: rgba(0, 0, 0, 0.8);
-  --table-text: #f4f4f9;
-  --table-header-bg: rgba(255, 255, 255, 0.1);
-  --table-header-text: rgba(255, 255, 255, 0.8);
-  --table-border: rgba(255, 255, 255, 0.2);
-  --mobile-menu-bg: rgba(0, 0, 0, 0.95);
-  --mobile-menu-border: rgba(255, 255, 255, 0.2);
-  --newsletter-input-bg: rgba(255, 255, 255, 0.2);
-  --newsletter-input-text: white;
+/* Dark Theme Adjustments for Toggle */
+body.dark-theme .theme-toggle-btn {
+  background-color: var(--card-bg);
+}
+
+body.dark-theme .theme-toggle-btn .toggle-ball {
+  background-color: var(--text-color);
+}
+
+body.dark-theme .theme-toggle-btn i {
+  color: var(--text-color);
 }
 
 /* Dark Theme Adjustments for Toggle */
@@ -1117,3 +1119,31 @@ body.dark-theme .theme-toggle-label i {
     padding: 12px;
   }
 }
+
+/* Specific breakpoint for 967px width */
+@media (max-width: 967px) {
+  .nav-links,
+  .auth-buttons {
+    display: none;
+  }
+
+  .mobile-menu-toggle {
+    display: block;
+  }
+
+  /* Hide the theme toggle in the navbar at this breakpoint */
+  .header-container .theme-toggle {
+    display: none;
+  }
+
+  /* Show the theme toggle in the mobile menu */
+  .mobile-menu .theme-toggle {
+    display: flex;
+    margin: 15px auto;
+    width: 80%;
+    justify-content: center;
+    border-bottom: 1px solid var(--mobile-menu-border);
+    padding-bottom: 15px;
+  }
+}
+
