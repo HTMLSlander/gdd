@@ -32,3 +32,13 @@ env\scripts\activate
 pip install -r requirements.txt
 cd hydration_reminder
 python manage.py runserver
+
+
+
+### **Step 2: For work with reminder systenm**
+
+you need to run this two commands in separate terminal -two terminal- 
+
+``bash
+celery -A hydration_reminder worker --loglevel=info
+celery -A hydration_reminder beat --loglevel=info

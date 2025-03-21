@@ -1,4 +1,23 @@
+/* Style the select dropdown */
+.custom-seltec {
+  width: 100%;
+  padding: 10px;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+/* Add focus effect */
+.custom-select:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
 /* Global Styles */
+
 * {
   margin: 0;
   padding: 0;
