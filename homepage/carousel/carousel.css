@@ -44,7 +44,8 @@
   color: #1d1d1f;
 }
 
-.dark h2 {
+.dark .carousel-card .carousel-container h2,
+.dark-theme .carousel-card .carousel-container h2 {
   color: #f5f5f7;
 }
 
@@ -105,7 +106,8 @@
   z-index: 1;
 }
 
-.dark .carousel-card {
+.dark .carousel-card,
+.dark-theme .carousel-card {
   background-color: #2d2d2f;
 }
 
@@ -177,29 +179,54 @@
   margin-left: auto;
 }
 
+/* Updated navigation button styles for better theme support */
 .nav-button {
   position: relative;
   z-index: 40;
   height: 2.5rem;
   width: 2.5rem;
   border-radius: 9999px;
-  background-color: var(--vivid-color);
-  border: 1px solid var(--text-black-color);
+  background-color: white;
+  border: 1px solid #1e1e1e;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.dark .nav-button,
+.dark-theme .nav-button {
+  background-color: #2d2d2f;
+  border: 1px solid #f4f4f9;
+}
+
+.nav-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.dark .nav-button:hover,
+.dark-theme .nav-button:hover {
+  box-shadow: 0 4px 8px rgba(255, 255, 255, 0.1);
 }
 
 .nav-button:disabled {
   opacity: 0.5;
   cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
 }
 
 .nav-button svg {
   height: 1.5rem;
   width: 1.5rem;
-  color: var(--text-black-color);
+  color: #1e1e1e;
+}
+
+.dark .nav-button svg,
+.dark-theme .nav-button svg {
+  color: #f4f4f9;
 }
 
 /* Modal styles */
@@ -231,6 +258,11 @@
   margin: 1.2rem auto;
   font-size: 1.5rem !important;
   color: rgba(0, 0, 0, 0.5);
+}
+
+.dark .modal li,
+.dark-theme .modal li {
+  color: rgba(255, 255, 255, 0.5);
 }
 
 .modal ul a {
@@ -268,7 +300,8 @@
   display: none;
 }
 
-.dark .modal-content {
+.dark .modal-content,
+.dark-theme .modal-content {
   background-color: #2d2d2f;
   color: #f5f5f7;
 }
@@ -288,7 +321,8 @@
   margin-left: auto;
 }
 
-.dark .close-button {
+.dark .close-button,
+.dark-theme .close-button {
   background-color: white;
 }
 
@@ -299,7 +333,8 @@
   /* transform: translateX(-50%) translateY(); */
 }
 
-.dark .close-button svg {
+.dark .close-button svg,
+.dark-theme .close-button svg {
   color: black;
 }
 
@@ -327,7 +362,8 @@
   color: var(--text-black-color);
 }
 
-.dark .content-block {
+.dark .content-block,
+.dark-theme .content-block {
   background-color: #3d3d3f;
 }
 
@@ -338,7 +374,8 @@
   margin: 0 auto;
 }
 
-.dark .content-text {
+.dark .content-text,
+.dark-theme .content-text {
   color: #a1a1a6;
 }
 
@@ -347,7 +384,8 @@
   color: #1d1d1f;
 }
 
-.dark .content-text strong {
+.dark .content-text strong,
+.dark-theme .content-text strong {
   color: #f5f5f7;
 }
 

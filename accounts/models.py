@@ -9,6 +9,7 @@ from django.contrib.auth.models import AbstractUser
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    picture = models.ImageField(upload_to='media/', blank=True, null=True)
     first_name = models.CharField(max_length=150, blank=True, null=True)
     last_name = models.CharField(max_length=150, blank=True, null=True)
     gender = models.CharField(max_length=100, choices=[('male' , 'Male'), ('female' , 'Female')])

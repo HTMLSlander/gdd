@@ -147,7 +147,7 @@
             </div>
 
             <!-- Question 4: Pregnancy Status -->
-            <div id="question-4" class="pregnancy-question">
+            <!-- <div id="question-4" class="pregnancy-question">
               <h2 class="question-title">Are you pregnant?</h2>
               <div class="pregnancy-option">
                 <input
@@ -181,12 +181,12 @@
                   >Not Applicable</label
                 >
               </div>
-            </div>
+            </div> -->
 
-            <!-- Question 5: Exercise Frequency -->
-            <div id="question-5" class="exercise-question">
+            <!-- Question 4: Exercise Frequency -->
+            <div id="question-4" class="activity-question">
               <h2 class="question-title">
-                How often do you exercise per week?
+                How do you consider your physical activity level?
               </h2>
               <div class="exercise-option">
                 <input
@@ -194,9 +194,9 @@
                   name="exercise"
                   value="never"
                   class="exercise-input"
-                  id="exercise-never"
+                  id="sedentary"
                 />
-                <label for="exercise-never" class="exercise-label">Never</label>
+                <label for="sedentary" class="exercise-label">Sedentary</label>
               </div>
               <div class="exercise-option">
                 <input
@@ -204,10 +204,10 @@
                   name="exercise"
                   value="1-2"
                   class="exercise-input"
-                  id="exercise-1-2"
+                  id="ligthly-active"
                 />
-                <label for="exercise-1-2" class="exercise-label"
-                  >1-2 times</label
+                <label for="ligthly-active" class="exercise-label"
+                  >Lightly Active</label
                 >
               </div>
               <div class="exercise-option">
@@ -216,10 +216,10 @@
                   name="exercise"
                   value="3-5"
                   class="exercise-input"
-                  id="exercise-3-5"
+                  id="moderately-active"
                 />
-                <label for="exercise-3-5" class="exercise-label"
-                  >3-5 times</label
+                <label for="moderately-active" class="exercise-label"
+                  >Moderately active</label
                 >
               </div>
               <div class="exercise-option">
@@ -228,15 +228,17 @@
                   name="exercise"
                   value="daily"
                   class="exercise-input"
-                  id="exercise-daily"
+                  id="very-active"
                 />
-                <label for="exercise-daily" class="exercise-label">Daily</label>
+                <label for="very-active" class="exercise-label"
+                  >Very active</label
+                >
               </div>
             </div>
 
             <!-- Question 6: Alcohol Consumption -->
-            <div id="question-6" class="alcohol-question">
-              <h2 class="question-title">How often do you consume alcohol?</h2>
+            <!-- <div id="question-6" class="alcohol-question">
+              <h2 class="question-title">How often are you prone to consume alcohol?</h2>
               <div class="alcohol-option">
                 <input
                   type="radio"
@@ -279,10 +281,47 @@
                 />
                 <label for="alcohol-daily" class="alcohol-label">Daily</label>
               </div>
+            </div> -->
+            <div id="question-5" class="climate-question">
+              <h2 class="question-title">
+                What kind of climate does the place you're in currently have?
+              </h2>
+              <div class="climate-option">
+                <input
+                  type="radio"
+                  name="climate"
+                  value="never"
+                  class="climate-input"
+                  id="climate-cold"
+                />
+                <label for="climate-cold" class="climate-label">Cold</label>
+              </div>
+              <div class="climate-option">
+                <input
+                  type="radio"
+                  name="climate"
+                  value="occasionally"
+                  class="climate-input"
+                  id="climate-template"
+                />
+                <label for="climate-template" class="climate-label"
+                  >Template</label
+                >
+              </div>
+              <div class="climate-option">
+                <input
+                  type="radio"
+                  name="climate"
+                  value="weekly"
+                  class="climate-input"
+                  id="climate-hot"
+                />
+                <label for="climate-hot" class="climate-label">Hot</label>
+              </div>
             </div>
 
-            <!-- Question 7: Smoking Habits -->
-            <div id="question-7" class="smoking-question">
+            <!-- Question 8: Smoking Habits
+            <div id="question-8" class="smoking-question">
               <h2 class="question-title">How often do you smoke?</h2>
               <div class="smoking-option">
                 <input
@@ -326,7 +365,7 @@
                 />
                 <label for="smoke-daily" class="smoking-label">Daily</label>
               </div>
-            </div>
+            </div> -->
 
             <!-- Navigation Buttons -->
             <div class="quiz-navigation">

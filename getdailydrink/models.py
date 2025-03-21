@@ -16,7 +16,12 @@ class UserWaterIntake(models.Model):
     email_frequency = models.CharField(max_length=50,choices=[
         ('daily', 'Daily'),
         ('weekly', 'Weekly'),
-    ])
+
+    ],
+    default='weekly',
+    blank=True, 
+    null=True,
+    )
 
     def weekly_drink(self):
         if self.water_amount is None:
@@ -39,7 +44,7 @@ class WaterTake(models.Model):
     amount_liters = models.FloatField()
     waterintake = models.FloatField(default=0.0)
     created_at = models.DateTimeField(auto_now_add=True)
-
+    
     def save(self, *args, **kwargs):
         self.amount_liters = dict(self.WATER_CHOICES)[self.cup]
         if not self.waterintake:
@@ -56,9 +61,9 @@ class SaveGoal(models.Model):
 
     def total(self):
         # Get all water intake records for this user
-        water_intakes = UserWaterIntake.objects.filter(user=self.user)
+        water_intakes = WaterTake.objects.filter(user=self.user)
         # Sum up all water amounts
-        total = sum(intake.water_amount or 0 for intake in water_intakes)
+        total = sum(intake.amount_liters or 0 for intake in water_intakes)
         self.total_water_drink = total
         return round(total, 2)
 

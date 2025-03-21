@@ -22,9 +22,9 @@ def register_view(request):
             user = form.save(commit=False)
             user.save()
 
-            gender = form.cleaned_data.get(['gender'])
-            age = form.cleaned_data.get(['age'])
-            weight = form.cleaned_data.get(['weight'])
+            gender = form.cleaned_data.get('gender')
+            age = form.cleaned_data.get('age')
+            weight = form.cleaned_data.get('weight')
 
             Profile.objects.create(user=user, gender=gender, age=age, weight=weight)
             messages.success(request, 'Form submitted successfully!')

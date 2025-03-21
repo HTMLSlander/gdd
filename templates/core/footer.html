@@ -1,27 +1,30 @@
     <!-- Footer -->
     <footer>
       <div class="container" id="footer-container">
-          <div class="footer-content">
+          <div style="gap: 5px;" class="footer-content">
               <div class="footer-column">
                   <h3>About Us</h3>
                   <p style="color: rgba(255, 255, 255, 0.7); font-size: 14px; line-height: 1.6; margin-bottom: 15px;">
                       Daily Drink Tracker helps you stay hydrated by tracking your water intake. Set goals, earn points, and compete with friends for a healthier lifestyle.
                   </p>
                   <div class="social-links">
-                      <a href="https://github.com/naranbhusal02"><i class="fab fa-github"></i></a>
-                      <a href="https://facebook.com/naranbhusal02"><i class="fab fa-facebook"></i></a>
-                      <a href="https://x.com/naranbhusal02"><i class="fab fa-twitter"></i></a>
-                      <a href="https://instagram.com/naranbhusal02"><i class="fab fa-instagram"></i></a>
+                      <a href="https://github.com/Hcode7/getdailydrink"><i class="fab fa-github"></i></a>
+                      <a href="#"><i class="fab fa-facebook"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="https://instagram.com/getdailydrink"><i class="fab fa-instagram"></i></a>
                   </div>
               </div>
+              
               <div class="footer-column">
                   <h3>Quick Links</h3>
                   <div class="footer-links">
                       <a href="{% url 'home' %}">Home</a>
                       <a href="#">Rankup</a>
-                      <a href="#video-section">Tutorial</a>
                       <a href="#">Pricing</a>
-                      <a href="#footer-container">Contact Us</a>
+                      {% if not request.user.is_authenticated %}
+                        <a href="{% url 'home' %}#video-section">Tutorial</a>
+                        <a href="{% url 'home' %}#footer-container">Contact Us</a>
+                      {% endif %}
                   </div>
               </div>
               <div class="footer-column">
@@ -50,7 +53,7 @@
               </div>
           </div>
           <div class="copyright">
-              <p>&copy; 2025 Daily Drink Tracker. Made with <i class="fas fa-heart"></i> by <a href="https://naranbhusal02.me" style="text-decoration: none; color: aliceblue;">Narayan Bhusal</a>.</p>
+              <p>&copy; 2025 Daily Drink Tracker. Made with <i class="fas fa-heart"></i> by <a href="#" style="text-decoration: none; color: aliceblue;">GET DAILY DRINK TEAM</a>.</p>
               <p style="margin-top: 10px; font-size: 12px;">
                   <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px;">Privacy</a>
                   <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px;">Terms</a>

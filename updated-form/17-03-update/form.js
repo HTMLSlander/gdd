@@ -1,5 +1,5 @@
 let currentQuestion = 0;
-const totalQuestions = 7;
+const totalQuestions = 5;
 const answers = {};
 
 function startQuiz() {

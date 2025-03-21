@@ -25,3 +25,13 @@ male,17,57,cold,none,sedentary
 male,17,57,cold,none,sedentary
 male,17,57,temperate,none,sedentary
 male,17,57,temperate,none,sedentary
+male,17,57,temperate,none,sedentary
+male,17,57,temperate,none,sedentary
+female,67,65,cold,none,sedentary
+female,10,50,hot,none,very-active
+male,100,50,hot,diabetes,sedentary
+male,17,57,temperate,none,sedentary
+male,17,57,hot,none,sedentary
+male,17,57,temperate,none,sedentary
+,,,temperate,none,moderately-active
+,,,temperate,none,lightly-active

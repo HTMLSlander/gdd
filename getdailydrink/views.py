@@ -1,4 +1,4 @@
-from django.shortcuts import redirect, render
+from django.shortcuts import redirect, render, get_object_or_404
 from django.http import JsonResponse
 import pandas as pd
 from accounts.models import Profile
@@ -113,7 +113,6 @@ def rankup_page(request):
         recap_data = None
     
     if not dailygoal:
-        messages.error(request, "Please set a daily water goal first!", extra_tags="rankup")
         return redirect('log_water')
 
     # For non-authenticated users, show rewards and rankings but hide water logging
@@ -212,18 +211,18 @@ def log_water(request):
                 # Extract profile data (fixed)
                 if profile:
                     weight = profile.weight
-                    gender = profile.gender  # Keep gender as a string ('male' or 'female')
+                    gender = profile.gender 
                     age = profile.age
                 else:
                     weight = form.cleaned_data['weight']
-                    gender = form.cleaned_data['gender']  # Keep gender as a string
+                    gender = form.cleaned_data['gender']
                     age = form.cleaned_data['age']
                     # reminder_times = form.cleaned_data.get(['reminder_times'], [])
 
                 # Extract form data
-                climate = form.cleaned_data['climate']  # 'cold', 'temperate', or 'hot' as string
-                activity_level = form.cleaned_data['activity_level']  # 'sedentary', 'lightly-active', etc., as string
-                health_conditions = form.cleaned_data['health_conditions']  # 'none', 'diabetes', etc., as string
+                climate = form.cleaned_data['climate']  
+                activity_level = form.cleaned_data['activity_level']
+                health_conditions = form.cleaned_data['health_conditions']  
 
                 # Prepare input data for prediction (using numeric mappings)
                 climate_map = {'cold': 0, 'temperate': 1, 'hot': 2}
@@ -253,9 +252,9 @@ def log_water(request):
                     'gender': gender,  # Save as string ('male' or 'female')
                     'age': age,
                     'weight': weight,
-                    'climate': climate,  # Save as string ('cold', 'temperate', etc.)
-                    'health_conditions': health_conditions,  # Save as string
-                    'activity_level': activity_level,  # Save as string
+                    'climate': climate, 
+                    'health_conditions': health_conditions,  
+                    'activity_level': activity_level, 
                 }])
                 new_entry.to_csv('hydration_data.csv', mode='a', header=False, index=False)
 
@@ -275,20 +274,27 @@ def log_water(request):
                     UserWaterIntake.objects.create(
                         session_key=request.session.session_key,
                         water_amount=predicted_water,
-                        email_frequency=form.cleaned_data['email_frequency']
                     )
 
-                return redirect('home')
+                return redirect('rankup')
             except Exception as e:
                 messages.error(request, f"Error processing your request: {str(e)}")
         else:
-            messages.error(request, "Please correct the errors in the form.")
+            messages.error(request, "Please correct the errors in the form.", extra_tags='log_water')
             print("Form Errors:", form.errors)  # Debugging
-
     else:
         form = WaterIntakeForm()
 
     return render(request, 'pages/log_water.html', {'form': form})
 
 def user_profile(request):
-    return render(request, 'pages/profile.html')
+    dailygoal = UserWaterIntake.objects.filter(user=request.user).last()
+    user_profile = get_object_or_404(Profile, user=request.user)
+    if request.method == 'POST':
+        update_form = ProfileForm(request.POST, request.FILES, instance=user_profile)
+        if update_form.is_valid():
+            update_form.save()
+    
+    else:
+        update_form = ProfileForm(instance=user_profile)
+    return render(request, 'pages/profile.html', {'dailygoal' : round(dailygoal.water_amount, 2), 'update_form' : update_form})
