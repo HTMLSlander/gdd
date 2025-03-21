@@ -1,83 +1,123 @@
-{% extends 'core/base.html' %}
-
-{% load static %}
-
-{% block content %}
+{% extends 'core/base.html' %} {% load static %} {% block content %}
 <body>
-    <!-- Signup Section -->
-    <section class="auth-section">
-        <div class="auth-container">
-            <div class="auth-left">
-                <img src="{% static 'images/image.png' %}" alt="Placeholder Image" class="placeholder-image">
-            </div>
-            <div class="auth-right">
-                <div class="auth-form-container">
-                    <h2>Create a Get Daily Drink Account</h2>
-                    <form method="post" class="auth-form" id="signup-form">
-                        {% csrf_token %}
+  <!-- Signup Section -->
+  <section class="auth-section">
+    <div class="auth-container">
+      <div class="auth-left">
+        <img
+          src="{% static 'images/image.png' %}"
+          alt="Placeholder Image"
+          class="placeholder-image"
+        />
+      </div>
+      <div class="auth-right">
+        <div class="auth-form-container">
+          <h2>Create a Get Daily Drink Account</h2>
+          <form method="post" class="auth-form" id="signup-form">
+            {% csrf_token %}
 
-                        <div class="form-group">
-                            <input name="username" type="text" id="email" placeholder="Email or username" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="gender" placeholder="Gender">
-                        </div>
-                        <div class="form-group">
-                            <input type="text" name="age">
-                        </div>
-                        <div class="form-group">
-                            {{ form.weight }}
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password1" id="password" placeholder="Password" required>
-                        </div>
-                        <div class="form-group">
-                            <input type="password" name="password2" id="confirm-password" placeholder="Confirm password" required>
-                        </div>
-                        <button type="submit" class="cta-btn" style="width: 100%; margin-top: 20px;">Sign up</button>
-                        
-                        <div class="auth-divider">
-                            <span>Or</span>
-                        </div>
-                        {% load socialaccount %}
-                        
-                        <div class="social-auth">
-                            <button type="button" class="google-auth">
-                                <a href="{% provider_login_url 'google' %}" style="color: white;" class="google-auth">
-                                    <i class="fab fa-google"></i>
-                                    Continue with Google
-                                </a>
-                                </button>
-                            <button type="button" class="apple-auth">
-                                <i class="fab fa-apple"></i>
-                                Continue with Apple
-                            </button>
-                        </div>
-                        <div class="auth-links">
-                            <p>No account? <a href="login.html">Log In</a></p>
-                        </div>
-                    </form>
-                </div>
+            <div class="form-group">
+              <input
+                name="username"
+                type="text"
+                id="email"
+                placeholder="Email or username"
+                required
+              />
             </div>
+            <div class="form-group">
+              <input type="text" name="gender" placeholder="Gender" />
+            </div>
+            <div class="form-group">
+              <input type="text" name="age" />
+            </div>
+            <div class="form-group">{{ form.weight }}</div>
+            <div class="form-group">
+              <input
+                type="password"
+                name="password1"
+                id="password"
+                placeholder="Password"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <input
+                type="password"
+                name="password2"
+                id="confirm-password"
+                placeholder="Confirm password"
+                required
+              />
+            </div>
+            <button
+              type="submit"
+              class="cta-btn"
+              style="width: 100%; margin-top: 20px"
+              href
+            >
+              Sign up
+            </button>
+
+            <div class="auth-divider">
+              <span>Or</span>
+            </div>
+            {% load socialaccount %}
+
+            <div class="social-auth">
+              <button type="button" class="google-auth">
+                <a
+                  href="{% provider_login_url 'google' %}"
+                  style="color: white"
+                  class="google-auth"
+                >
+                  <i class="fab fa-google"></i>
+                  Continue with Google
+                </a>
+              </button>
+              <button type="button" class="apple-auth">
+                <i class="fab fa-apple"></i>
+                Continue with Apple
+              </button>
+            </div>
+            <div class="auth-links">
+              <p>No account? <a href="login.html">Log In</a></p>
+            </div>
+          </form>
         </div>
-    </section>
-    
+      </div>
+    </div>
+  </section>
 
-    <!-- Footer -->
-    <footer class="auth-footer">
-        <div class="container">
-            <div class="copyright">
-                <p>&copy; 2025 Daily Drink Tracker. Made with <i class="fas fa-heart"></i> by <a href="https://naranbhusal02.me" style="text-decoration: none; color: aliceblue;">Narayan Bhusal</a>.</p>
-                <p style="margin-top: 10px; font-size: 12px;">
-                    <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px;">Privacy</a>
-                    <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px;">Terms</a>
-                    <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px;">Cookies</a>
-                </p>
-            </div>
-        </div>
-    </footer>
+  <!-- Footer -->
+  <footer class="auth-footer">
+    <div class="container">
+      <div class="copyright">
+        <p>
+          &copy; 2025 Daily Drink Tracker. Made with
+          <i class="fas fa-heart"></i> by
+          <a
+            href="https://naranbhusal02.me"
+            style="text-decoration: none; color: aliceblue"
+            >Narayan Bhusal</a
+          >.
+        </p>
+        <p style="margin-top: 10px; font-size: 12px">
+          <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px"
+            >Privacy</a
+          >
+          <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px"
+            >Terms</a
+          >
+          <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px"
+            >Cookies</a
+          >
+        </p>
+      </div>
+    </div>
+  </footer>
 
-    <!-- JavaScript -->
-    <script src="script.js"></script>
+  <!-- JavaScript -->
+  <script src="script.js"></script>
 </body>
 {% endblock content %}
