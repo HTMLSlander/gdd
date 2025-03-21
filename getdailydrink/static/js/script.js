@@ -124,20 +124,6 @@ window.addEventListener("scroll", function () {
   }
 });
 
-// Social auth buttons
-const googleAuth = document.querySelector(".google-auth");
-if (googleAuth) {
-  googleAuth.addEventListener("click", function () {
-    alert("Google authentication is not implemented in this demo.");
-  });
-}
-
-const appleAuth = document.querySelector(".apple-auth");
-if (appleAuth) {
-  appleAuth.addEventListener("click", function () {
-    alert("Apple authentication is not implemented in this demo.");
-  });
-}
 
 const slider = document.querySelector(".slider");
 const screen = document.querySelector(".screen");

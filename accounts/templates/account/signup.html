@@ -14,20 +14,28 @@
       <div class="auth-right">
         <div class="auth-form-container">
           <h2>Create a Get Daily Drink Account</h2>
-          <form method="post" class="auth-form" id="signup-form">
+          <form method="post" class="auth-form">
             {% csrf_token %}
-
+            
+            <select name="gender" id="gender">
+                <option value="">Select Gender</option>
+                <option value="male">Male</option>
+                <option value="female">Female</option>
+            </select>
+            <br><br>
+            <input type="number" name="age" id="age" min="1" max="120" placeholder="Enter you Age">
+            <br><br>
+            <input type="number" name="weight" id="weight" min="1" max="300" placeholder="Enter you Weight (kg)">
+            <br><br>
             <div class="form-group">
               <input
                 name="username"
                 type="text"
-                id="email"
+                id="username"
                 placeholder="Email or username"
                 required
               />
             </div>
-
-
             <div class="form-group">
               <input
                 type="password"
@@ -50,11 +58,10 @@
               type="submit"
               class="cta-btn"
               style="width: 100%; margin-top: 20px"
-              href
             >
               Sign up
             </button>
-
+         </form>
             <div class="auth-divider">
               <span>Or</span>
             </div>
@@ -79,41 +86,10 @@
             <div class="auth-links">
               <p>No account? <a href="{% url 'login' %}">Log In</a></p>
             </div>
-          </form>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="auth-footer">
-    <div class="container">
-      <div class="copyright">
-        <p>
-          &copy; 2025 Daily Drink Tracker. Made with
-          <i class="fas fa-heart"></i> by
-          <a
-            href="https://naranbhusal02.me"
-            style="text-decoration: none; color: aliceblue"
-            >Narayan Bhusal</a
-          >.
-        </p>
-        <p style="margin-top: 10px; font-size: 12px">
-          <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px"
-            >Privacy</a
-          >
-          <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px"
-            >Terms</a
-          >
-          <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px"
-            >Cookies</a
-          >
-        </p>
-      </div>
-    </div>
-  </footer>
-
-  <!-- JavaScript -->
-  <script src="script.js"></script>
 </body>
 {% endblock content %}
