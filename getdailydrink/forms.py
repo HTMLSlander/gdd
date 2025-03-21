@@ -49,11 +49,13 @@ class WaterIntakeForm(forms.Form):
             ('daily', 'Daily'),
             ('weekly', 'Weekly'),
         ],
-        widget=forms.Select(attrs={'class': 'custom-select'}) 
+        widget=forms.Select(attrs={'class': 'custom-select'}) ,
+        required=False,
     )
     reminder_times = forms.MultipleChoiceField(
         choices=[(str(hour), f"{hour}:00") for hour in range(24)],
         widget=forms.CheckboxSelectMultiple(attrs={'class': 'custom-checkbox'}),
+        required=False,
     )
 
     # Custom widget updates

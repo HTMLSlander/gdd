@@ -12,8 +12,8 @@
             {% if request.user.is_authenticated %}
                 <div class="container">
                     <div class="dashboard-header">
-                        {% if complete_message %}
-                        {% for message in complete_message %}
+                        {% if messages %}
+                        {% for message in messages %}
                             <h2>{{ message }}</h2>
                         {% endfor %}
                         {% else %}
@@ -21,20 +21,7 @@
 
                         {% endif %}
                         <a href="{% url 'log_water' %}" class="track-btn">Trigger to position</a>
-                        <br><br>
-                        <form id="cupForm" method="post">
-                            {% csrf_token %}
-                            <select name="cup" class="track-btn form-select" id="quantitySelect">
-                                <option style="background-color: black; border:gray;" value="250ml">250ml</option>
-                                <option style="background-color: black;" value="500ml">500ml</option>
-                                <option style="background-color: black;" value="1L">1L</option>
-                            </select>
-                            <br><br>
-                            <p>Selected Quantity: <span id="selectedQuantity">250ml</span></p>
-                            <br>
-                            <button type="submit" class="get-started-btn">add</button>
-                            <br><br>
-                        </form>
+
                     </div>
 
                 </div>
@@ -53,7 +40,22 @@
                             <span class="drink-label">Month drink</span>
                                 <h3>{{ month_left }}/L oz</h3>
                         </div>
+
                 </div>
+                <br><br>
+                <form id="cupForm" style="display: flex; justify-content: center;" method="post">
+                    {% csrf_token %}
+                    <div style="align-items: center;">
+                        <select style="cursor: pointer;" name="cup" class="track-btn form-select" id="quantitySelect">
+                            <option style="background-color: black; border:gray;" value="250ml">250ml</option>
+                            <option style="background-color: black;" value="500ml">500ml</option>
+                            <option style="background-color: black;" value="1L">1L</option>
+                        </select>
+                        <button type="submit" style="cursor: pointer;" class="get-started-btn">add</button>
+                        <br><br>
+                        <p>Selected Quantity: <span id="selectedQuantity">250ml</span></p>
+                    </div>
+                </form>                
                     {% else %}
                         <div class="container">
 
@@ -96,7 +98,7 @@
                         {% for winner in winners %}
                             <div class="position-card {% if forloop.counter == 1 %} first {% elif forloop.counter == 2 %} second {% elif forloop.counter == 3 %} third {% endif %}">
                                 <h3>{{ forloop.counter }}rd</h3>
-                                <p>{{ winner.user.username }}<br>{{ winner.total }} L</p>
+                                <p>{{ winner.user.username }}<br>{{ winner.points }} points</p>
                             </div>
                         {% endfor %}
                     </div>

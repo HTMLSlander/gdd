@@ -9,7 +9,7 @@
   <div class="tracker-container">
     <div class="tracker-header">
       <h1 class="tracker-title">Calculate Your Daily Water Needs</h1>
-      <p class="tracker-subtitle">Our AI will analyze your profile to recommend the perfect hydration plan</p>
+      <p class="tracker-subtitle" style="color: white;">Our AI will analyze your profile to recommend the perfect hydration plan</p>
     </div>
     
     <div class="tracker-card">
@@ -228,7 +228,8 @@
 <style>
 /* Main Container Styles */
 .hydration-tracker {
-  background: linear-gradient(135deg, #e0f7fa, #bbdefb);
+  /* background: linear-gradient(135deg, #e0f7fa, #bbdefb); */
+  background-color: #121212;
   padding: 40px 20px;
   min-height: 100vh;
   display: flex;
@@ -248,7 +249,7 @@
 }
 
 .tracker-title {
-  color: #0277bd;
+  color: #f44336;
   font-size: 32px;
   margin-bottom: 10px;
 }
@@ -282,7 +283,7 @@
 
 .progress-fill {
   height: 100%;
-  background-color: #03a9f4;
+  background: linear-gradient(45deg, #ff5e00, #ff0062);
   width: 25%;
   transition: width 0.3s ease;
 }
@@ -299,7 +300,7 @@
 }
 
 .step.active {
-  color: #03a9f4;
+  color: #f44336;
   font-weight: 600;
 }
 
@@ -314,7 +315,7 @@
 }
 
 .section-title {
-  color: #0277bd;
+  color: #f44336;
   margin-bottom: 20px;
   font-size: 20px;
 }
@@ -356,7 +357,7 @@ select {
 input[type="text"]:focus,
 input[type="number"]:focus,
 select:focus {
-  border-color: #03a9f4;
+  border-color: #f44336;
   box-shadow: 0 0 0 3px rgba(3, 169, 244, 0.1);
   outline: none;
 }
@@ -415,11 +416,11 @@ select:focus {
 
 .radio-option input[type="radio"]:checked + .radio-icon + .radio-label,
 .radio-option input[type="radio"]:checked + .radio-icon {
-  color: #0277bd;
+  color: #f44336;
 }
 
 .radio-option input[type="radio"]:checked ~ * {
-  color: #0277bd;
+  color: #f44336;
 }
 
 .radio-option input[type="radio"]:checked + .radio-icon {
@@ -427,7 +428,7 @@ select:focus {
 }
 
 .radio-option:has(input[type="radio"]:checked) {
-  border-color: #0277bd;
+  border-color: #f44336;
   background-color: #e1f5fe;
 }
 
@@ -469,7 +470,7 @@ select:focus {
 }
 
 .toggle-option:has(input[type="radio"]:checked) {
-  background-color: #03a9f4;
+  background: linear-gradient(45deg, #ff5e00, #ff0062);
 }
 
 .toggle-option:has(input[type="radio"]:checked) .toggle-label {
@@ -554,7 +555,7 @@ select:focus {
 }
 
 .next-btn {
-  background-color: #03a9f4;
+  background: linear-gradient(45deg, #ff5e00, #ff0062);
   color: white;
 }
 
@@ -593,7 +594,7 @@ select:focus {
 }
 
 .info-card h3 {
-  color: #0277bd;
+  color: #f44336;
   margin-bottom: 10px;
 }
 
