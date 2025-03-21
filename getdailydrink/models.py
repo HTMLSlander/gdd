@@ -18,8 +18,9 @@ class UserWaterIntake(models.Model):
         ('weekly', 'Weekly'),
 
     ],
+    default='weekly',
     blank=True, 
-    null=True
+    null=True,
     )
 
     def weekly_drink(self):
