@@ -1,19 +1,54 @@
-// Mobile menu toggle
-const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
-const mobileMenu = document.querySelector(".mobile-menu");
+// Add this code to your script.js file or create a new script specifically for navigation
 
-if (mobileMenuToggle && mobileMenu) {
-  mobileMenuToggle.addEventListener("click", function () {
-    if (mobileMenu.className === "mobile-menu mobile-menu-show") {
-      mobileMenu.classList.remove("mobile-menu-show");
-      mobileMenuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-    } else {
-      mobileMenuToggle.innerHTML = '<i class="fas fa-times"></i>';
-      mobileMenu.classList.add("mobile-menu-show");
-    }
+document.addEventListener('DOMContentLoaded', function() {
+  // Mobile menu toggle functionality
+  const mobileMenuToggle = document.getElementById('mobile-menu-toggle');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  if (mobileMenuToggle && mobileMenu) {
+      mobileMenuToggle.addEventListener('click', function() {
+          // Toggle the 'active' class on the mobile menu
+          mobileMenu.classList.toggle('active');
+          
+          // Change the icon based on menu state
+          const icon = mobileMenuToggle.querySelector('i');
+          if (mobileMenu.classList.contains('active')) {
+              icon.classList.remove('fa-bars');
+              icon.classList.add('fa-times');
+          } else {
+              icon.classList.remove('fa-times');
+              icon.classList.add('fa-bars');
+          }
+      });
+  }
+  
+  // Close mobile menu when clicking outside
+  document.addEventListener('click', function(event) {
+      if (mobileMenu && mobileMenu.classList.contains('active') && 
+          !mobileMenu.contains(event.target) && 
+          !mobileMenuToggle.contains(event.target)) {
+          mobileMenu.classList.remove('active');
+          
+          // Reset the icon
+          const icon = mobileMenuToggle.querySelector('i');
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+      }
   });
-}
-
+  
+  // Also handle mobile menu link clicks (close menu when link is clicked)
+  const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+  mobileMenuLinks.forEach(link => {
+      link.addEventListener('click', function() {
+          mobileMenu.classList.remove('active');
+          
+          // Reset the icon
+          const icon = mobileMenuToggle.querySelector('i');
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+      });
+  });
+});
 
 const signupForm = document.getElementById("signup-form");
 if (signupForm) {

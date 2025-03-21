@@ -2,8 +2,6 @@
 
 {% load static %}
 {% block content %}
-<body>
-    <link rel="stylesheet" href="{% static 'css/rankup.css' %}">
     <!-- Main Content -->
     <main>
 
@@ -45,7 +43,7 @@
                 <br><br>
                 <form id="cupForm" style="display: flex; justify-content: center;" method="post">
                     {% csrf_token %}
-                    <div style="align-items: center;">
+                    <div style="display: flex; justify-content: center;">
                         <select style="cursor: pointer;" name="cup" class="track-btn form-select" id="quantitySelect">
                             <option style="background-color: black; border:gray;" value="250ml">250ml</option>
                             <option style="background-color: black;" value="500ml">500ml</option>
@@ -53,9 +51,10 @@
                         </select>
                         <button type="submit" style="cursor: pointer;" class="get-started-btn">add</button>
                         <br><br>
-                        <p>Selected Quantity: <span id="selectedQuantity">250ml</span></p>
                     </div>
                 </form>                
+                <br>
+                <p style="display: flex; justify-content: center;">Selected Quantity: <span id="selectedQuantity">250ml</span></p>
                     {% else %}
                         <div class="container">
 
@@ -173,5 +172,4 @@ function getCookie(name) {
 }
     </script>
     <script src="{% static 'rankup.js' %}"></script>
-</body>
 {% endblock content %}
