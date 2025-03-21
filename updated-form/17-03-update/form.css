@@ -129,7 +129,7 @@
 .age-question,
 .weight-question,
 .pregnancy-question,
-.exercise-question,
+.activity-question,
 .alcohol-question,
 .smoking-question {
   margin-bottom: 3rem;
@@ -138,8 +138,9 @@
 .age-question,
 .weight-question,
 .pregnancy-question,
-.exercise-question,
+.activity-question,
 .alcohol-question,
+.climate-question,
 .smoking-question {
   display: none;
 }
