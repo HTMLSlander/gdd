@@ -204,3 +204,4 @@ CELERY_RESULT_BACKEND = 'redis://default:hvLBSRjoV7PYmKYmOqbD5E3GvonQlcwT@redis-
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 
+broker_connection_retry_on_startup = True
