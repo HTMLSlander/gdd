@@ -30,6 +30,9 @@ ALLOWED_HOSTS = ['localhost' , '127.0.0.1', 'getdailydrink.up.railway.app']
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [ 'https://getdailydrink.up.railway.app' ] 
 
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
+
+
 # Application definition
 
 INSTALLED_APPS = [

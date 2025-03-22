@@ -289,6 +289,12 @@ def log_water(request):
 
 def user_profile(request):
     dailygoal = UserWaterIntake.objects.filter(user=request.user).last()
+    
+    water_amount = 0
+    if dailygoal:
+        if dailygoal.water_amount is not None:
+            water_amount = round(dailygoal.water_amount, 2)
+            
     user_profile = get_object_or_404(Profile, user=request.user)
     if request.method == 'POST':
         update_form = ProfileForm(request.POST, request.FILES, instance=user_profile)
@@ -297,4 +303,4 @@ def user_profile(request):
     
     else:
         update_form = ProfileForm(instance=user_profile)
-    return render(request, 'pages/profile.html', {'dailygoal' : round(dailygoal.water_amount, 2), 'update_form' : update_form})
+    return render(request, 'pages/profile.html', {'dailygoal' : water_amount, 'update_form' : update_form})
