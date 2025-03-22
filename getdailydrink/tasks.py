@@ -21,7 +21,7 @@ def send_hydration_reminders(*args, **kwargs):
         if now in times:
             send_mail(
                 "Get Daily Drink",
-                f"Hey {user.user.username}, don't forget to drink {user.water_amount}L of water now!",
+                f"Hey {user.user.username}, your water bottle is crying from neglect right now! 💧 Time to step up your hydration game and crush that {user.water_amount} goal! Are you going to let a little thing like thirst stand between you and greatness? I don't think so! Grab that bottle and show it who's boss! 💪 #StayHydratedOrGetDefeated",
                 "amineratit6@gmail.com",
                 [user.user.email],
                 fail_silently=False,

@@ -25,10 +25,10 @@ SECRET_KEY = 'django-insecure-b$#0l^6ag91qsvo8e5zz+s*qc!j#5(otlw)@l6q=e_(^*hzcuf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['localhost' , '127.0.0.1', 'getdailydrink.up.railway.app']
+ALLOWED_HOSTS = ['localhost' , '127.0.0.1', 'getdailydrink.up.railway.app', 'getdailydrink.naranbhusal02.me']
 
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = [ 'https://getdailydrink.up.railway.app' ] 
+CSRF_TRUSTED_ORIGINS = [ 'https://getdailydrink.up.railway.app' , 'https://getdailydrink.naranbhusal02.me' ] 
 
 ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
