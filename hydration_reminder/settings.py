@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['localhost' , '127.0.0.1', 'https://getdailydrink.up.railway.app']
 
 CSRF_COOKIE_SECURE = True
-CSRF_TRUSTED_ORIGINS = [ 'https://getdailydrink.up.railway.app/' ] 
+CSRF_TRUSTED_ORIGINS = [ 'https://getdailydrink.up.railway.app' ] 
 
 # Application definition
 
