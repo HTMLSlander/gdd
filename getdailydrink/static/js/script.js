@@ -148,3 +148,17 @@ screen.addEventListener("scroll", () => {
     }, 100); // Adjust the delay for smoother snapping
   }
 });
+
+function getCSRFToken() {
+  let csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
+  return csrfToken;
+}
+
+fetch('/your-endpoint/', {
+  method: 'POST',
+  headers: {
+      'Content-Type': 'application/json',
+      'X-CSRFToken': getCSRFToken()  // ✅ Include CSRF token
+  },
+  body: JSON.stringify({ key: "value" })
+});
