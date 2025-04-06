@@ -4,7 +4,7 @@ import pandas as pd
 from accounts.models import Profile
 from .forms import *
 from .models import UserWaterIntake, SaveGoal, WaterTake
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required  
 from django.utils.timezone import now
 import numpy as np
 from django.contrib import messages

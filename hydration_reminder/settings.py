@@ -27,6 +27,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['localhost' , '127.0.0.1', 'getdailydrink.up.railway.app', 'getdailydrink.naranbhusal02.me']
 
+
 CSRF_COOKIE_SECURE = True
 CSRF_TRUSTED_ORIGINS = [ 'https://getdailydrink.up.railway.app' , 'https://getdailydrink.naranbhusal02.me' ] 
 
@@ -76,8 +77,8 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # Add the keys you got from Google Console
 SOCIALACCOUNT_PROVIDERS['google']['APP'] = {
-    'client_id': '535842358796-gs2e7v78jpti53si011s6io8m1d8vufl.apps.googleusercontent.com',
-    'secret': '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',
+    'client_id': config('CLIENT_ID'),
+    'secret': config('SECRET'),
     'key': ''
 }
 
@@ -123,7 +124,8 @@ WSGI_APPLICATION = 'hydration_reminder.wsgi.application'
 from decouple import config
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',        'NAME': config('DB_NAME'),
+        'ENGINE': 'django.db.backends.postgresql',        
+        'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
         'HOST': config('DB_HOST'),
