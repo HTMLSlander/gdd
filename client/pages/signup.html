@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Daily Drink Tracker</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/logbackground.css" />
+    <link rel="stylesheet" href="../static/css/auth.css" />
+  </head>
+  <body style="overflow-y: auto">
+    <!-- Header -->
+    <!-- <header>
+        <div class="header-container">
+            <div class="logo">
+                <img src="https://iili.io/3FO8EQt.png" alt="Daily Drink Logo" class="logo-image" style="border-radius: 30px;">
+            </div>
+            <div class="nav-links">
+                <a href="index.html" class="active">Home</a>
+                <a href="#" class="active">Rankup</a>
+                <a href="index.html#video-section" class="active">Tutorial</a>
+                <a href="index.html#footer-container" class="active">Contact</a>
+            </div>
+            <div class="auth-buttons">
+                <a href="login.html" class="login-btn active">Login</a>
+                <a href="signup.html" class="get-started-btn">Get Started</a>
+            </div>
+            <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header> -->
+
+    <!-- Mobile Menu -->
+    <!-- <div class="mobile-menu" id="mobile-menu">
+        <a href="index.html">Home</a>
+        <a href="#">Rankup</a>
+        <a href="index.html#video-section">Tutorial</a>
+        <a href="index.html#footer-container">Contact</a>
+        <a href="login.html" class="active">Login</a>
+        <a href="signup.html" class="cta-btn">Get Started</a>
+    </div> -->
+    <!-- Dynamic Background -->
+    <div class="background">
+      <div class="torus-container">
+        <canvas id="torus-canvas"></canvas>
+      </div>
+
+      <div class="shapes-container">
+        <!-- Circles -->
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+
+        <!-- Rectangles -->
+        <div class="rectangle rectangle-1"></div>
+        <div class="rectangle rectangle-2"></div>
+      </div>
+    </div>
+    <!-- Login Section -->
+    <section class="auth-section">
+      <div class="auth-container">
+        <!-- <div class="auth-left">
+          <img
+            src="/Images/background.jpg"
+            alt="Placeholder Image"
+            class="placeholder-image"
+          />
+        </div> -->
+
+        <h2>Create a <span>Get Daily Drink</span> Account</h2>
+        <form class="auth-form" id="signup-form">
+          <div class="form-group">
+            <input
+              type="text"
+              id="email"
+              placeholder="Email or username"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <div class="verification-group">
+              <input
+                type="text"
+                id="verification"
+                placeholder="Verification code"
+                required
+              />
+              <button type="button" class="send-btn">Send</button>
+            </div>
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              id="password"
+              placeholder="Password"
+              required
+            />
+          </div>
+          <div class="form-group">
+            <input
+              type="password"
+              id="confirm-password"
+              placeholder="Confirm password"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="cta-btn"
+            style="width: 100%; margin-top: 20px"
+          >
+            Create Account and Start the Quiz
+          </button>
+
+          <div class="auth-divider">
+            <span>Or</span>
+          </div>
+
+          <div class="social-auth">
+            <button type="button" class="google-auth">
+              <i class="fab fa-google"></i>
+              Continue with Google
+            </button>
+            <button type="button" class="apple-auth">
+              <i class="fab fa-apple"></i>
+              Continue with Apple
+            </button>
+          </div>
+          <div class="auth-links">
+            <p>
+              Already with an account?
+              <a href="login.html" aria-label="Click here to log in"
+                >Click here</a
+              >
+            </p>
+          </div>
+        </form>
+      </div>
+    </section>
+    <footer class="auth-footer">
+      <div class="container">
+        <div class="copyright">
+          <p>
+            &copy; 2025 Get Daily Drink. Made with
+            <i class="fas fa-heart"></i> by
+            <a href="https://naranbhusal02.me">Narayan Bhusal</a> &
+            <a href="github.com">HTMLSlander</a>.
+          </p>
+          <p>
+            <a href="#">Privacy</a>
+            <a href="#">Terms</a>
+            <a href="#">Cookies</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- JavaScript -->
+    <script src="https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.min.js"></script>
+    <script src="../static/js/script.js"></script>
+    <script src="../static/js/logbackground.js"></script>
+  </body>
+</html>

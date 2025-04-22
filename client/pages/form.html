@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Daily Water Intake Quiz</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="icon" href="favicons/favicon-standard.png" />
+
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body class="font-sans bg-dark">
+    <div id="root" class="min-vh-100 d-flex flex-column flex-md-row">
+      <!-- Quiz Section -->
+      <div
+        class="w-100 w-md-50 d-flex align-items-center justify-content-center p-5 bg-dark"
+      >
+        <div class="w-100 max-w-md">
+          <!-- Start Screen -->
+          <div id="start-screen" class="text-center">
+            <h1 class="display-4 fw-bold text-light mb-4">
+              Let's Find Your
+              <span class="gradient-text">Daily Water Intake</span>
+            </h1>
+            <p class="lead text-secondary mb-5">
+              Take a quick quiz to get personalized recommendations.
+            </p>
+            <button
+              onclick="startQuiz()"
+              class="btn gradient-bg text-white rounded-pill px-5 py-3"
+            >
+              Start Quiz
+            </button>
+          </div>
+
+          <!-- Quiz Questions -->
+          <div id="quiz-questions" class="d-none">
+            <!-- Progress Bar -->
+            <div class="progress mb-4" style="height: 8px">
+              <div
+                id="progress-bar"
+                class="progress-bar progress-bar-gradient"
+                role="progressbar"
+                style="width: 20%"
+              ></div>
+            </div>
+
+            <!-- Question 1: Gender -->
+            <div id="question-1" class="mb-5">
+              <h2 class="h3 fw-semibold text-light mb-4">
+                What is your gender?
+              </h2>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="male"
+                  class="form-check-input"
+                  id="male"
+                />
+                <label for="male" class="form-check-label text-light"
+                  >Male</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="gender"
+                  value="female"
+                  class="form-check-input"
+                  id="female"
+                />
+                <label for="female" class="form-check-label text-light"
+                  >Female</label
+                >
+              </div>
+            </div>
+
+            <!-- Question 2: Age -->
+            <div id="question-2" class="d-none mb-5">
+              <h2 class="h3 fw-semibold text-light mb-4">What is your age?</h2>
+              <input
+                type="number"
+                min="1"
+                max="120"
+                class="form-control form-control-lg"
+                placeholder="Enter your age"
+              />
+            </div>
+
+            <!-- Question 3: Weight -->
+            <div id="question-3" class="d-none mb-5">
+              <h2 class="h3 fw-semibold text-light mb-4">
+                What is your weight?
+              </h2>
+              <div class="d-flex gap-3">
+                <input
+                  type="number"
+                  min="1"
+                  class="form-control form-control-lg"
+                  placeholder="Enter your weight"
+                />
+                <select class="form-select form-select-lg">
+                  <option value="kg">kg</option>
+                  <option value="lbs">lbs</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Question 4: Pregnancy Status -->
+            <div id="question-4" class="d-none mb-5">
+              <h2 class="h3 fw-semibold text-light mb-4">Are you pregnant?</h2>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="pregnancy"
+                  value="yes"
+                  class="form-check-input"
+                  id="pregnancy-yes"
+                />
+                <label for="pregnancy-yes" class="form-check-label text-light"
+                  >Yes</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="pregnancy"
+                  value="no"
+                  class="form-check-input"
+                  id="pregnancy-no"
+                />
+                <label for="pregnancy-no" class="form-check-label text-light"
+                  >No</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="pregnancy"
+                  value="not-applicable"
+                  class="form-check-input"
+                  id="pregnancy-na"
+                />
+                <label for="pregnancy-na" class="form-check-label text-light"
+                  >Not Applicable</label
+                >
+              </div>
+            </div>
+
+            <!-- Question 5: Exercise Frequency -->
+            <div id="question-5" class="d-none mb-5">
+              <h2 class="h3 fw-semibold text-light mb-4">
+                How often do you exercise per week?
+              </h2>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="exercise"
+                  value="never"
+                  class="form-check-input"
+                  id="exercise-never"
+                />
+                <label for="exercise-never" class="form-check-label text-light"
+                  >Never</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="exercise"
+                  value="1-2"
+                  class="form-check-input"
+                  id="exercise-1-2"
+                />
+                <label for="exercise-1-2" class="form-check-label text-light"
+                  >1-2 times</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="exercise"
+                  value="3-5"
+                  class="form-check-input"
+                  id="exercise-3-5"
+                />
+                <label for="exercise-3-5" class="form-check-label text-light"
+                  >3-5 times</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="exercise"
+                  value="daily"
+                  class="form-check-input"
+                  id="exercise-daily"
+                />
+                <label for="exercise-daily" class="form-check-label text-light"
+                  >Daily</label
+                >
+              </div>
+            </div>
+
+            <!-- Question 6: Alcohol Consumption -->
+            <div id="question-6" class="d-none mb-5">
+              <h2 class="h3 fw-semibold text-light mb-4">
+                How often do you consume alcohol?
+              </h2>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="alcohol"
+                  value="never"
+                  class="form-check-input"
+                  id="alcohol-never"
+                />
+                <label for="alcohol-never" class="form-check-label text-light"
+                  >Never</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="alcohol"
+                  value="occasionally"
+                  class="form-check-input"
+                  id="alcohol-occasionally"
+                />
+                <label
+                  for="alcohol-occasionally"
+                  class="form-check-label text-light"
+                  >Occasionally</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="alcohol"
+                  value="weekly"
+                  class="form-check-input"
+                  id="alcohol-weekly"
+                />
+                <label for="alcohol-weekly" class="form-check-label text-light"
+                  >Weekly</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="alcohol"
+                  value="daily"
+                  class="form-check-input"
+                  id="alcohol-daily"
+                />
+                <label for="alcohol-daily" class="form-check-label text-light"
+                  >Daily</label
+                >
+              </div>
+            </div>
+            <div id="question-7" class="d-none mb-5">
+              <h2 class="h3 fw-semibold text-light mb-4">
+                How often do you smoke?
+              </h2>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="smoke"
+                  value="never"
+                  class="form-check-input"
+                  id="smoke-never"
+                />
+                <label for="smoke-never" class="form-check-label text-light"
+                  >Never</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="smoke"
+                  value="occasionally"
+                  class="form-check-input"
+                  id="smoke-occasionally"
+                />
+                <label
+                  for="smoke-occasionally"
+                  class="form-check-label text-light"
+                  >Occasionally</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="smoke"
+                  value="weekly"
+                  class="form-check-input"
+                  id="smoke-weekly"
+                />
+                <label for="smoke-weekly" class="form-check-label text-light"
+                  >Weekly</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="smoke"
+                  value="daily"
+                  class="form-check-input"
+                  id="smoke-daily"
+                />
+                <label for="smoke-daily" class="form-check-label text-light"
+                  >Daily</label
+                >
+              </div>
+            </div>
+            <div id="question-7" class="d-none mb-5">
+              <h2 class="h3 fw-semibold text-light mb-4">
+                How often do you smoke?
+              </h2>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="smoke"
+                  value="never"
+                  class="form-check-input"
+                  id="smoke-never"
+                />
+                <label for="smoke-never" class="form-check-label text-light"
+                  >Never</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="smoke"
+                  value="occasionally"
+                  class="form-check-input"
+                  id="smoke-occasionally"
+                />
+                <label
+                  for="smoke-occasionally"
+                  class="form-check-label text-light"
+                  >Occasionally</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="smoke"
+                  value="weekly"
+                  class="form-check-input"
+                  id="smoke-weekly"
+                />
+                <label for="smoke-weekly" class="form-check-label text-light"
+                  >Weekly</label
+                >
+              </div>
+              <div class="form-check">
+                <input
+                  type="radio"
+                  name="smoke"
+                  value="daily"
+                  class="form-check-input"
+                  id="smoke-daily"
+                />
+                <label for="smoke-daily" class="form-check-label text-light"
+                  >Daily</label
+                >
+              </div>
+            </div>
+
+            <!-- Navigation Buttons -->
+            <div class="d-flex justify-content-between pt-4">
+              <button
+                onclick="previousQuestion()"
+                class="btn btn-outline-secondary rounded-pill px-4 py-2"
+              >
+                <i class="fas fa-chevron-left me-2"></i>Previous
+              </button>
+              <button
+                onclick="nextQuestion()"
+                class="btn gradient-bg text-white rounded-pill px-4 py-2"
+              >
+                Next<i class="fas fa-chevron-right ms-2"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Results Screen -->
+          <div id="results-screen" class="d-none text-center">
+            <h2 class="display-5 fw-bold text-light mb-4">
+              Your Daily Water Intake
+            </h2>
+            <div class="display-1 fw-bold text-pink mb-5">
+              <span id="water-intake">2000</span> ml
+            </div>
+            <p class="lead text-secondary mb-5">
+              Based on your answers, this is your recommended daily water
+              intake.
+            </p>
+            <div
+              class="d-flex justify-content-center align-items-center text-center flex-column"
+            >
+              <button
+                onclick="activateNotifications()"
+                class="btn gradient-bg text-white rounded-pill px-5 py-3 mb-3"
+              >
+                <i class="fas fa-bell me-2"></i>Activate Notifications
+              </button>
+              <button
+                onclick="window.location.href='index.html'"
+                class="btn btn-outline-light rounded-pill px-5 py-3"
+              >
+                <i class="fas fa-home me-2"></i>Go back to Main Page
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image Section -->
+      <div
+        class="w-100 w-md-50 bg-cover bg-center"
+        style="
+          background-image: url('https://images.unsplash.com/photo-1531512073830-ba890ca4eba2?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=1470&q=80');
+        "
+      >
+        <footer class="p-4 text-black text-center bg-light bg-opacity-50">
+          <p>
+            Copyright © 2025 Get Daily Drink | Designed by
+            <a
+              href="https://github.com/HTMLSlander"
+              class="text-decoration-none text-black hover-text-pink"
+              >HTMLSlander</a
+            >
+          </p>
+        </footer>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,79 @@
+/* Unique class prefix "wave-anim-" to avoid collisions */
+.wave-anim-container {
+  position: absolute;
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  background-color: #f4f4f9;
+}
+
+.wave-anim-wrapper {
+  position: absolute;
+  inset: 0;
+}
+
+.wave-anim-wave-container {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+
+.wave-anim-wave-teal {
+  position: absolute;
+  width: 200%;
+  height: 40%;
+  top: 15%;
+  left: 0;
+  animation: wave-anim-loop-1 20s linear infinite;
+}
+
+.wave-anim-wave-blue {
+  position: absolute;
+  width: 200%;
+  height: 40%;
+  top: 45%;
+  left: 0;
+  animation: wave-anim-loop-2 15s linear infinite reverse;
+}
+
+.wave-anim-svg {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  filter: blur(40px);
+}
+
+.wave-anim-svg-duplicate {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 100%;
+  filter: blur(40px);
+}
+
+.wave-anim-path-teal {
+  fill: #76c7c0;
+}
+
+.wave-anim-path-blue {
+  fill: #00a4cc;
+}
+
+/* Animation keyframes with unique names */
+@keyframes wave-anim-loop-1 {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
+
+@keyframes wave-anim-loop-2 {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}

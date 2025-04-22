@@ -11,12 +11,13 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css" />
-    <link rel="stylesheet" href="./carousel/carousel.css" />
-    <link rel="stylesheet" href="../wave/wave-animation.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="stylesheet" href="../static/css/navbar.css" />
+    <link rel="stylesheet" href="../static//css/carousel.css" />
+    <link rel="stylesheet" href="../static/css/wave-animation.css" />
   </head>
   <body>
     <!-- Header -->
@@ -37,16 +38,8 @@
           <a href="#footer-container" class="active">Contact</a>
         </div>
         <div class="auth-buttons">
-          <a href="../login/login.html" class="login-btn">Login</a>
-          <a href="../login/signup.html" class="get-started-btn">Get Started</a>
-        </div>
-        <!-- Theme Toggle -->
-        <div class="theme-toggle">
-          <button id="theme-toggle-btn" class="theme-toggle-btn">
-            <i class="fas fa-sun"></i>
-            <i class="fas fa-moon"></i>
-            <div class="toggle-ball"></div>
-          </button>
+          <a href="login.html" class="login-btn">Login</a>
+          <a href="signup.html" class="get-started-btn">Get Started</a>
         </div>
         <button class="mobile-menu-toggle" id="mobile-menu-toggle">
           <i class="fas fa-bars"></i>
@@ -61,14 +54,6 @@
         <a href="#">Rankup</a>
         <a href="#video-section">Tutorial</a>
         <a href="#footer-container">Contact</a>
-        <!-- Add theme toggle inside mobile menu -->
-        <div class="theme-toggle">
-          <button id="mobile-theme-toggle-btn" class="theme-toggle-btn">
-            <i class="fas fa-sun"></i>
-            <i class="fas fa-moon"></i>
-            <div class="toggle-ball"></div>
-          </button>
-        </div>
         <a class="secondary-btn" href="login.html">Login</a>
         <a href="signup.html" class="cta-btn">Get Started</a>
       </div>
@@ -78,19 +63,25 @@
       <div class="container">
         <div class="hero-content">
           <div class="hero-left">
-            <h1>Track your daily drinks with ease</h1>
+            <h1>
+              Track your daily drinks with a
+              <div class="badge-container">
+                <div class="badge-background"></div>
+                <span class="badge-text">simple tap</span>
+              </div>
+            </h1>
             <p>
               Stay hydrated and healthy by tracking your daily water intake. Set
               goals, earn points, and compete with friends.
             </p>
             <div class="btn-groups">
-              <a href="../login/signup.html" class="cta-btn">Get Started</a>
-              <a href="../login/login.html" class="secondary-btn">Log In</a>
+              <a href="signup.html" class="cta-btn">Get Started</a>
+              <a href="#" class="secondary-btn">Log In</a>
             </div>
           </div>
           <div class="hero-right">
             <img
-              src="./Images/landing-page.png"
+              src="../src/landing-page.png"
               alt="of a man getting hydrated"
             />
           </div>
@@ -125,7 +116,30 @@
           </div>
 
           <!-- Second wave - Blue (#00A4CC) -->
-        
+          <div class="wave-anim-wave-container">
+            <div class="wave-anim-wave-blue">
+              <svg
+                viewBox="0 0 1200 120"
+                preserveAspectRatio="none"
+                class="wave-anim-svg"
+              >
+                <path
+                  class="wave-anim-path-blue"
+                  d="M0,120 C150,100 300,80 450,80 C600,80 750,100 900,120 C1050,140 1200,120 1200,120 V0 H0 V120 Z"
+                ></path>
+              </svg>
+              <svg
+                viewBox="0 0 1200 120"
+                preserveAspectRatio="none"
+                class="wave-anim-svg-duplicate"
+              >
+                <path
+                  class="wave-anim-path-blue"
+                  d="M0,120 C150,100 300,80 450,80 C600,80 750,100 900,120 C1050,140 1200,120 1200,120 V0 H0 V120 Z"
+                ></path>
+              </svg>
+            </div>
+          </div>
         </div>
       </div>
     </section>
@@ -361,11 +375,6 @@
       </div>
     </section>
     <!-- Wave Section -->
-
-    <!--Data metrics section commented-->
-<!-- 
-    
-
     <section class="wave-section">
       <div class="container">
         <h1>Check out these data metrics!</h1>
@@ -414,15 +423,7 @@
           </linearGradient>
         </defs>
       </svg>
-    </section>   
- 
- 
-    -->
-
-
-
-
-
+    </section>
     <!-- Positions Section -->
     <!-- <section class="positions-section">
       <div class="positions-wave"></div>
@@ -499,12 +500,11 @@
     </section> -->
 
     <!-- Footer -->
-    <!-- Footer -->
     <footer>
       <div class="container" id="footer-container">
         <div class="footer-content">
           <div class="footer-column">
-            <a href="https://naranbhusal02.me" style="text-decoration: none;"><h3>About Us</h3></a>
+            <h3>About Us</h3>
             <p
               style="
                 color: rgba(255, 255, 255, 0.7);
@@ -539,9 +539,10 @@
               <a href="#">Rankup</a>
               <a href="#video-section">Tutorial</a>
               <!-- <a href="#">Pricing</a> -->
-              <a href="https://naranbhusal02.me">Contact Us</a>
+              <a href="#footer-container">Contact Us</a>
             </div>
-            <!-- <div class="footer-column">
+          </div>
+          <!-- <div class="footer-column">
             <h3>Support</h3>
             <div class="footer-links">
               <a href="#">Help Center</a>
@@ -551,11 +552,6 @@
               <a href="#">Community Guidelines</a>
             </div>
           </div> -->
-          </div>
-        
-        <!--New letter commented
-
-
           <div class="footer-column">
             <h3>Stay Updated</h3>
             <p
@@ -578,16 +574,14 @@
                 margin-top: 10px;
               "
             >
-              We <a href="https://naranbhusal02.me"
-              style="text-decoration: none; color: aliceblue">respect</a> your privacy. Unsubscribe at any time.
+              We respect your privacy. Unsubscribe at any time.
             </p>
           </div>
         </div>
-      -->
         <div class="copyright">
           <p>
             &copy; 2025 Get Daily Drink. Made with
-            <i class="fas fa-heart" style="color: red;"></i> by
+            <i class="fas fa-heart"></i> by
             <a
               href="https://naranbhusal02.me"
               style="text-decoration: none; color: aliceblue"
@@ -610,9 +604,8 @@
     </footer>
 
     <!-- JavaScript -->
-    <script src="script.js"></script>
-    <script src="./carousel/carousel.js"></script>
-    <script src="transition-badge.js"></script>
+    <script src="../static/js/script.js"></script>
+    <script src="../static/js/carousel.js"></script>
+    <script src="../static/js/transition-badge.js"></script>
   </body>
 </html>
-
