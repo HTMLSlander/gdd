@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rank-Up Dashboard</title>
+    <link rel="stylesheet" href="../static/css/newrankup.css" />
+    <link rel="stylesheet" href="../static/css/rankup-navbar.css" />
+    <link rel="stylesheet" href="../static/css/styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Open+Sans:ital,wght@0,300..800;1,300..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Feather Icons (similar to Lucide) -->
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="header-container">
+        <div class="logo">
+          <img
+            src="https://iili.io/3FO8EQt.png"
+            alt="Logo"
+            class="logo-image"
+          />
+          <span class="logo-text">Drink Tracker</span>
+        </div>
+        <div class="auth-buttons"></div>
+        <button class="mobile-menu-toggle" id="mobile-menu-toggle">
+          <img src="../src/menu.svg" alt="For mobile menu toggle" />
+        </button>
+        <button class="dark-toggle" id="dark-toggle">
+          <i data-feather="moon" class="dark-toggle-icon"></i>
+        </button>
+        <button class="user-menu-toggle" id="user-menu-toggle">
+          <a href="#" class="nav-link"
+            ><img src="../src/user.svg" alt="" />
+            <p>HeroGuest</p>
+          </a>
+          <img src="../src/chevron-down.svg" alt="Click for User Menu" />
+        </button>
+      </div>
+    </header>
+    <div class="user-menu" id="userMenu">
+      <a><img src="../src/user.svg" alt="" />HeroGuest</a>
+      <a href="#"> <img src="../src/trophy-solid.svg" alt="" />Ranking</a>
+      <a><img src="../src/settings.svg" alt="" /> Settings</a>
+      <a><img src="../src/users.svg" alt="" />Invite</a>
+      <a href="./index.html" class="secondary-btn sign-out">Sign Out</a>
+      <h1 class="danger-title">Danger Zone</h1>
+      <a href="" class="secondary-btn">
+        <img src="../src/trash-2.svg" alt="" />Delete Account</a
+      >
+    </div>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu" id="mobileMenu">
+      <a><img src="../src/user.svg" alt="" />HeroGuest</a>
+      <a href="#"> <img src="../src/trophy-solid.svg" alt="" />Ranking</a>
+      <a><img src="../src/settings.svg" alt="" /> Settings</a>
+      <a><img src="../src/users.svg" alt="" />Invite</a>
+      <a href="./index.html" class="secondary-btn sign-out">Sign Out</a>
+      <h1 class="danger-title">Danger Zone</h1>
+      <a href="" class="secondary-btn">
+        <img src="../src/trash-2.svg" alt="" />Delete Account</a
+      >
+    </div>
+    <div class="app-wrapper">
+      <main class="main-container">
+        <!-- Tab Content -->
+        <div class="tabs-container">
+          <!-- Dashboard Tab -->
+          <div class="tab-panel active" id="dashboard">
+            <div class="content-section">
+              <div class="welcome-header">
+                <h1 class="page-title">Welcome, HydrationHero!</h1>
+                <p class="page-subtitle">
+                  You're on a mission to stay hydrated and level up your health.
+                  Keep going!
+                </p>
+              </div>
+
+              <!-- XP Progress -->
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h2 class="card-title">
+                    <i data-feather="award" class="icon-award"></i>
+                    Level 5 Hydrator
+                  </h2>
+                  <p class="card-description">
+                    Only 250 XP left until your next badge!
+                  </p>
+                </div>
+                <div class="card-content">
+                  <div class="xp-progress">
+                    <div class="xp-progress-header">
+                      <div class="xp-current">750 XP</div>
+                      <div class="xp-target">1000 XP</div>
+                    </div>
+                    <div class="xp-bar-container">
+                      <div class="xp-bar-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="xp-milestones">
+                      <div class="milestone-dot" style="left: 25%"></div>
+                      <div class="milestone-dot" style="left: 50%"></div>
+                      <div class="milestone-dot" style="left: 75%"></div>
+                      <div class="current-progress-dot" style="left: 75%"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Water Intake Progress -->
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h2 class="card-title">Your Hydration Journey</h2>
+                  <p class="card-description">
+                    Track your progress at a glance
+                  </p>
+                </div>
+                <div class="card-content">
+                  <div class="progress-grid">
+                    <div class="progress-item">
+                      <div
+                        class="circle-progress"
+                        data-value="72"
+                        data-color="blue"
+                        data-label="Today"
+                      ></div>
+                      <p class="progress-label">1.8L / 2.5L</p>
+                    </div>
+                    <div class="progress-item">
+                      <div
+                        class="circle-progress"
+                        data-value="70"
+                        data-color="teal"
+                        data-label="Week"
+                      ></div>
+                      <p class="progress-label">12.3L / 17.5L</p>
+                    </div>
+                    <div class="progress-item">
+                      <div
+                        class="circle-progress"
+                        data-value="70"
+                        data-color="cyan"
+                        data-label="Month"
+                      ></div>
+                      <p class="progress-label">52.4L / 75L</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Quick Actions -->
+              <div class="quick-actions">
+                <button
+                  class="action-button action-blue"
+                  onclick="switchTab('challenges')"
+                >
+                  <i data-feather="award" class="action-icon"></i>
+                  <span>Challenges</span>
+                </button>
+                <button
+                  class="action-button action-teal"
+                  onclick="switchTab('rewards')"
+                >
+                  <i data-feather="gift" class="action-icon"></i>
+                  <span>Rewards</span>
+                </button>
+                <button
+                  class="action-button action-yellow"
+                  onclick="switchTab('achievements')"
+                >
+                  <i data-feather="award" class="action-icon"></i>
+                  <span>Achievements</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Challenges Tab -->
+          <div class="tab-panel" id="challenges">
+            <div class="content-section">
+              <div class="welcome-header">
+                <h1 class="page-title">Step Up Your Hydration Game! 💧🏆</h1>
+                <p class="page-subtitle">
+                  Complete challenges to earn XP and unlock rewards
+                </p>
+              </div>
+
+              <!-- Challenge Cards -->
+              <div class="challenge-list">
+                <!-- Challenge 1 -->
+                <div class="challenge-card">
+                  <div class="card-header">
+                    <h2 class="card-title">
+                      <i data-feather="droplet" class="icon-blue"></i>
+                      Daily Hydration
+                    </h2>
+                    <p class="card-description">Drink 2.5 liters today</p>
+                  </div>
+                  <div class="card-content">
+                    <div class="challenge-details">
+                      <div class="challenge-progress-bar">
+                        <div
+                          class="progress-fill blue"
+                          style="width: 72%"
+                        ></div>
+                      </div>
+                      <div class="challenge-actions">
+                        <span class="xp-badge blue">+50 XP</span>
+                        <button
+                          class="button button-outline"
+                          onclick="acceptChallenge(1)"
+                        >
+                          Accept Challenge
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Challenge 2 -->
+                <div class="challenge-card completed">
+                  <div class="card-header">
+                    <h2 class="card-title">
+                      <i data-feather="calendar" class="icon-green"></i>
+                      Weekly Streak
+                      <i data-feather="check-circle" class="icon-check"></i>
+                    </h2>
+                    <p class="card-description">Maintain your 7-day streak</p>
+                  </div>
+                  <div class="card-content">
+                    <div class="challenge-details">
+                      <div class="challenge-progress-bar">
+                        <div
+                          class="progress-fill green"
+                          style="width: 100%"
+                        ></div>
+                      </div>
+                      <div class="challenge-actions">
+                        <span class="xp-badge blue">+100 XP</span>
+                        <span class="completed-text">Completed!</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Challenge 3 -->
+                <div class="challenge-card">
+                  <div class="card-header">
+                    <h2 class="card-title">
+                      <i data-feather="book-open" class="icon-blue"></i>
+                      Hydration Knowledge
+                    </h2>
+                    <p class="card-description">
+                      Read an article on hydration benefits
+                    </p>
+                  </div>
+                  <div class="card-content">
+                    <div class="challenge-details">
+                      <div class="challenge-progress-bar">
+                        <div class="progress-fill blue" style="width: 0%"></div>
+                      </div>
+                      <div class="challenge-actions">
+                        <span class="xp-badge blue">+75 XP</span>
+                        <button
+                          class="button button-outline"
+                          onclick="acceptChallenge(3)"
+                        >
+                          Accept Challenge
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Social Sharing Challenge -->
+                <div class="challenge-card gradient">
+                  <div class="card-header">
+                    <h2 class="card-title">
+                      <i data-feather="share-2" class="icon-blue"></i>
+                      Share Your Progress
+                    </h2>
+                    <p class="card-description">
+                      Share your hydration journey and earn bonus XP!
+                    </p>
+                  </div>
+                  <div class="card-content">
+                    <div class="social-share">
+                      <button
+                        class="social-button facebook"
+                        onclick="shareProgress('Facebook')"
+                      >
+                        <i data-feather="facebook"></i>
+                        <span class="screen-reader-text"
+                          >Share on Facebook</span
+                        >
+                      </button>
+                      <button
+                        class="social-button twitter"
+                        onclick="shareProgress('Twitter')"
+                      >
+                        <i data-feather="twitter"></i>
+                        <span class="screen-reader-text">Share on Twitter</span>
+                      </button>
+                    </div>
+                    <p class="share-bonus">+25 XP for each share!</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Rewards Tab -->
+          <div class="tab-panel" id="rewards">
+            <div class="content-section">
+              <div class="welcome-header">
+                <h1 class="page-title">
+                  Earn XP. Unlock Rewards. Stay Hydrated.
+                </h1>
+                <p class="page-subtitle">
+                  Your journey to better hydration comes with rewards
+                </p>
+              </div>
+
+              <!-- XP Summary -->
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h2 class="card-title">Your XP Journey</h2>
+                  <p class="card-description">
+                    You've earned 750 XP so far! Keep up the great work.
+                  </p>
+                </div>
+                <div class="card-content">
+                  <div class="xp-progress">
+                    <div class="xp-progress-header">
+                      <div class="xp-current">
+                        <span class="level-indicator">Level 5</span>
+                        <span>750 XP</span>
+                      </div>
+                      <div class="xp-target">1000 XP</div>
+                    </div>
+                    <div class="xp-bar-container">
+                      <div class="xp-bar-fill" style="width: 75%"></div>
+                    </div>
+                    <div class="xp-milestones">
+                      <div class="milestone-dot" style="left: 25%"></div>
+                      <div class="milestone-dot" style="left: 50%"></div>
+                      <div class="milestone-dot" style="left: 75%"></div>
+                      <div class="current-progress-dot" style="left: 75%"></div>
+                    </div>
+                  </div>
+                  <p class="next-level-info">
+                    Next badge unlocks at 1000 XP—almost there!
+                  </p>
+                </div>
+              </div>
+
+              <!-- Rewards Grid -->
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h2 class="card-title">
+                    <i data-feather="award" class="icon-yellow"></i>
+                    Badges & Rewards
+                  </h2>
+                  <p class="card-description">
+                    Reach new levels, earn badges, and show off your progress!
+                  </p>
+                </div>
+                <div class="card-content">
+                  <div class="rewards-grid">
+                    <!-- Reward 1 -->
+                    <div class="reward-item unlocked">
+                      <div class="reward-icon">
+                        <i data-feather="award"></i>
+                      </div>
+                      <h3 class="reward-name">Hydration Novice</h3>
+                      <p class="reward-requirement">Level 5</p>
+                      <div class="reward-check">
+                        <i data-feather="check-circle"></i>
+                      </div>
+                    </div>
+
+                    <!-- Reward 2 -->
+                    <div class="reward-item">
+                      <div class="reward-icon">
+                        <i data-feather="award"></i>
+                      </div>
+                      <h3 class="reward-name">Water Warrior</h3>
+                      <p class="reward-requirement">Level 10</p>
+                    </div>
+
+                    <!-- Reward 3 -->
+                    <div class="reward-item">
+                      <div class="reward-icon">
+                        <i data-feather="award"></i>
+                      </div>
+                      <h3 class="reward-name">Hydration Hero</h3>
+                      <p class="reward-requirement">Level 15</p>
+                    </div>
+
+                    <!-- Reward 4 -->
+                    <div class="reward-item">
+                      <div class="reward-icon">
+                        <i data-feather="award"></i>
+                      </div>
+                      <h3 class="reward-name">Aqua Master</h3>
+                      <p class="reward-requirement">Level 20</p>
+                    </div>
+
+                    <!-- Reward 5 -->
+                    <div class="reward-item">
+                      <div class="reward-icon">
+                        <i data-feather="award"></i>
+                      </div>
+                      <h3 class="reward-name">Hydration Legend</h3>
+                      <p class="reward-requirement">Level 25</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Stats Summary -->
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h2 class="card-title">
+                    <i data-feather="bar-chart-2" class="icon-blue"></i>
+                    Your Hydration Stats
+                  </h2>
+                </div>
+                <div class="card-content">
+                  <div class="stats-grid">
+                    <div class="stat-box blue">
+                      <h3 class="stat-value">7 Days</h3>
+                      <p class="stat-name">Current Streak</p>
+                    </div>
+                    <div class="stat-box teal">
+                      <h3 class="stat-value">5</h3>
+                      <p class="stat-name">Current Level</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Achievements Tab -->
+          <div class="tab-panel" id="achievements">
+            <div class="content-section">
+              <div class="welcome-header">
+                <h1 class="page-title">Your Hydration Achievements! 🎖️</h1>
+                <p class="page-subtitle">
+                  Showcase your hydration journey milestones
+                </p>
+              </div>
+
+              <!-- Unlocked Achievements -->
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h2 class="card-title">
+                    <i data-feather="check-circle" class="icon-green"></i>
+                    Unlocked Achievements
+                  </h2>
+                  <p class="card-description">
+                    Congratulations! You've unlocked these badges
+                  </p>
+                </div>
+                <div class="card-content">
+                  <div class="achievements-grid">
+                    <!-- Achievement 1 -->
+                    <div class="achievement-item unlocked">
+                      <div class="achievement-icon">
+                        <i data-feather="droplet"></i>
+                      </div>
+                      <h3 class="achievement-name">First Drop</h3>
+                      <p class="achievement-description">
+                        Log your first water intake
+                      </p>
+                    </div>
+
+                    <!-- Achievement 2 -->
+                    <div class="achievement-item unlocked">
+                      <div class="achievement-icon">
+                        <i data-feather="calendar"></i>
+                      </div>
+                      <h3 class="achievement-name">Week Warrior</h3>
+                      <p class="achievement-description">
+                        Complete a full week of hitting your daily goal
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Locked Achievements -->
+              <div class="dashboard-card">
+                <div class="card-header">
+                  <h2 class="card-title">
+                    <i data-feather="award" class="icon-gray"></i>
+                    Achievements to Unlock
+                  </h2>
+                  <p class="card-description">
+                    Keep pushing! Here's how to earn your next badge
+                  </p>
+                </div>
+                <div class="card-content">
+                  <div class="achievements-grid">
+                    <!-- Achievement 3 -->
+                    <div class="achievement-item locked">
+                      <div class="achievement-icon">
+                        <i data-feather="award"></i>
+                      </div>
+                      <h3 class="achievement-name">Hydration Master</h3>
+                      <p class="achievement-description">Reach level 10</p>
+                    </div>
+
+                    <!-- Achievement 4 -->
+                    <div class="achievement-item locked">
+                      <div class="achievement-icon">
+                        <i data-feather="book-open"></i>
+                      </div>
+                      <h3 class="achievement-name">Knowledge Seeker</h3>
+                      <p class="achievement-description">
+                        Read 5 hydration articles
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="button-container">
+                <button
+                  class="button button-primary"
+                  onclick="switchTab('challenges')"
+                >
+                  <i data-feather="award" class="button-icon"></i>
+                  Take a Challenge & Unlock More Badges!
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Bottom Navigation -->
+      <div class="bottom-navigation">
+        <button
+          class="nav-button active"
+          data-tab="dashboard"
+          onclick="switchTab('dashboard')"
+        >
+          <i data-feather="home"></i>
+          <span>Home</span>
+        </button>
+        <button
+          class="nav-button"
+          data-tab="challenges"
+          onclick="switchTab('challenges')"
+        >
+          <i data-feather="award"></i>
+          <span>Challenges</span>
+        </button>
+        <button
+          class="nav-button"
+          data-tab="rewards"
+          onclick="switchTab('rewards')"
+        >
+          <i data-feather="gift"></i>
+          <span>Rewards</span>
+        </button>
+        <button
+          class="nav-button"
+          data-tab="achievements"
+          onclick="switchTab('achievements')"
+        >
+          <i data-feather="award"></i>
+          <span>Badges</span>
+        </button>
+      </div>
+    </div>
+
+    <script src="../static/js/newrankup.js"></script>
+  </body>
+</html>
