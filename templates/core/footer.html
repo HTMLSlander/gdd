@@ -19,7 +19,7 @@
                   <h3>Quick Links</h3>
                   <div class="footer-links">
                       <a href="{% url 'home' %}">Home</a>
-                      <a href="#">Rankup</a>
+                      <a href="{% 'rankup' %}">Rankup</a>
                       <a href="#">Pricing</a>
                       {% if not request.user.is_authenticated %}
                         <a href="{% url 'home' %}#video-section">Tutorial</a>
@@ -52,7 +52,7 @@
                   </p>
               </div>
           </div>
-          <div class="copyright">
+          <div class="copyright">  
               <p>&copy; 2025 Daily Drink Tracker. Made with <i class="fas fa-heart"></i> by <a href="#" style="text-decoration: none; color: aliceblue;">GET DAILY DRINK TEAM</a>.</p>
               <p style="margin-top: 10px; font-size: 12px;">
                   <a href="#" style="color: rgba(255, 255, 255, 0.5); margin: 0 10px;">Privacy</a>

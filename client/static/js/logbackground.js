@@ -107,9 +107,13 @@ document.addEventListener("mousemove", (e) => {
   // Update circle positions
   const circle1 = document.querySelector(".circle-1");
   const circle2 = document.querySelector(".circle-2");
+  const circle3 = document.querySelector(".circle-3");
+  const circle4 = document.querySelector(".circle-4");
 
   circle1.style.transform = `translate(${mouseX * 20}px, ${mouseY * 20}px)`;
   circle2.style.transform = `translate(${mouseX * -15}px, ${mouseY * -15}px)`;
+  circle3.style.transform = `translate(${mouseX * -40}px, ${mouseY * -80}px)`;
+  circle4.style.transform = `translate(${mouseX * -20}px, ${mouseY * -35}px) `;
 
   // Update rectangle positions and rotation
   const rect1 = document.querySelector(".rectangle-1");

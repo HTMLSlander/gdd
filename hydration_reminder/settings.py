@@ -25,7 +25,13 @@ SECRET_KEY = 'django-insecure-b$#0l^6ag91qsvo8e5zz+s*qc!j#5(otlw)@l6q=e_(^*hzcuf
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['localhost' , '127.0.0.1', 'getdailydrink.up.railway.app', 'getdailydrink.naranbhusal02.me']
+
+
+CSRF_COOKIE_SECURE = True
+CSRF_TRUSTED_ORIGINS = [ 'https://getdailydrink.up.railway.app' , 'https://getdailydrink.naranbhusal02.me' ] 
+
+ACCOUNT_DEFAULT_HTTP_PROTOCOL = 'https'
 
 
 # Application definition
@@ -71,8 +77,8 @@ SOCIALACCOUNT_LOGIN_ON_GET = True
 
 # Add the keys you got from Google Console
 SOCIALACCOUNT_PROVIDERS['google']['APP'] = {
-    'client_id': '535842358796-gs2e7v78jpti53si011s6io8m1d8vufl.apps.googleusercontent.com',
-    'secret': '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',
+    'client_id': config('CLIENT_ID'),
+    'secret': config('SECRET'),
     'key': ''
 }
 
@@ -118,7 +124,7 @@ WSGI_APPLICATION = 'hydration_reminder.wsgi.application'
 from decouple import config
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',        
         'NAME': config('DB_NAME'),
         'USER': config('DB_USER'),
         'PASSWORD': config('DB_PASSWORD'),
@@ -203,3 +209,4 @@ CELERY_RESULT_BACKEND = 'redis://default:hvLBSRjoV7PYmKYmOqbD5E3GvonQlcwT@redis-
 CELERY_ACCEPT_CONTENT = ['json']
 CELERY_TASK_SERIALIZER = 'json'
 
+broker_connection_retry_on_startup = True

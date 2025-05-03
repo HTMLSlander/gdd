@@ -53,19 +53,33 @@ body {
 }
 
 .circle-1 {
-  top: 50px;
-  left: 50px;
-  width: 180px;
-  height: 180px;
+  top: 10px;
+  right: 200px;
+  width: 210px;
+  height: 210px;
   background-color: rgba(0, 164, 204, 0.2);
 }
 
 .circle-2 {
-  bottom: 0;
-  left: 300px;
-  width: 250px;
-  height: 250px;
-  background-color: rgba(118, 199, 192, 0.3);
+  bottom: 30px;
+  right: 30px;
+  width: 400px;
+  height: 400px;
+  background-color: rgba(118, 199, 192, 0.4);
+}
+.circle-3 {
+  bottom: 30px;
+  right: 30px;
+  width: 350px;
+  height: 350px;
+  background-color: rgba(118, 199, 192, 0.6);
+}
+.circle-4 {
+  bottom: 500px;
+  left: 600px;
+  width: 400px;
+  height: 400px;
+  background-color: rgba(105, 184, 178, 0.8);
 }
 
 .rectangle {

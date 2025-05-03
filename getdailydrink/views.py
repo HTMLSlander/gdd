@@ -4,7 +4,7 @@ import pandas as pd
 from accounts.models import Profile
 from .forms import *
 from .models import UserWaterIntake, SaveGoal, WaterTake
-from django.contrib.auth.decorators import login_required
+from django.contrib.auth.decorators import login_required  
 from django.utils.timezone import now
 import numpy as np
 from django.contrib import messages
@@ -13,6 +13,8 @@ import joblib
 from datetime import timedelta
 from django.core.mail import send_mail
 from django.utils.timezone import localtime
+# Import the calculation function from utils.py
+from .utils import calculate_water_intake
 
 model = joblib.load('hydration_model.pkl')
 
@@ -186,15 +188,15 @@ def rankup_page(request):
 
 
 def log_water(request):
-    """Logs user's water intake goal based on ML prediction."""
+    """Logs user's water intake goal based on enhanced precision calculation."""
     
     # Load the trained model (ensure it's available)
     try:
-        model = joblib.load('hydration_model.pkl')  # Load your trained model
-    except FileNotFoundError:
-        print("Model file not found!")
-        # Handle the error by returning an appropriate response
-        return render(request, 'error_page.html', {'message': 'Model file not found.'})
+        model = joblib.load('hydration_model.pkl')
+        scaler = joblib.load('scaler.pkl')
+    except FileNotFoundError as e:
+        print(f"File not found: {e}")
+        return render(request, 'error_page.html', {'message': f'Required file not found: {e}'})
 
     profile = None
 
@@ -208,7 +210,7 @@ def log_water(request):
         form = WaterIntakeForm(request.POST)
         if form.is_valid():
             try:
-                # Extract profile data (fixed)
+                # Extract profile data
                 if profile:
                     weight = profile.weight
                     gender = profile.gender 
@@ -217,39 +219,53 @@ def log_water(request):
                     weight = form.cleaned_data['weight']
                     gender = form.cleaned_data['gender']
                     age = form.cleaned_data['age']
-                    # reminder_times = form.cleaned_data.get(['reminder_times'], [])
 
                 # Extract form data
                 climate = form.cleaned_data['climate']  
                 activity_level = form.cleaned_data['activity_level']
                 health_conditions = form.cleaned_data['health_conditions']  
 
-                # Prepare input data for prediction (using numeric mappings)
-                climate_map = {'cold': 0, 'temperate': 1, 'hot': 2}
-                activity_level_map = {'sedentary': 0, 'lightly-active': 1, 'moderately-active': 2, 'very-active': 3}
-                health_conditions_map = {'none': 0, 'diabetes': 1, 'kidney disease': 2, 'heart disease': 3, 'pregnancy': 4}
-
-                input_data = np.array(
-                    [[
-                    weight, 
-                    0 if gender == 'male' else 1,  # gender as integer (0 or 1)
-                    climate_map[climate], 
-                    activity_level_map[activity_level], 
-                    age, 
-                    health_conditions_map[health_conditions]
-                    ]], 
-                    dtype=np.float32
+                # Get precise water intake calculation
+                # 1. Base calculation using the high-precision formula from utils.py
+                formula_water = calculate_water_intake(
+                    gender=gender,
+                    weight=weight,
+                    age=age,
+                    activity_level=activity_level,
+                    climate=climate,
+                    health_condition=health_conditions
                 )
                 
-                columns = ['weight', 'gender', 'climate', 'activity_level', 'age', 'health_conditions']
-                input_df = pd.DataFrame(input_data, columns=columns)
+                # 2. Get additional precision factors that might not be in the formula
+                # Age adjustment - younger adults need slightly more water
+                age_factor = 1.0
+                if age < 30:
+                    age_factor = 1.05
+                elif age > 55:
+                    age_factor = 0.95
+                
+                # Gender-specific adjustments based on physiological differences
+                gender_factor = 1.0 if gender == 'male' else 0.9
+                
+                # 3. Apply enhanced precision calculation
+                precise_water = formula_water * age_factor * gender_factor
+                
+                # 4. Round to meaningful precision (nearest 50ml)
+                # This makes the recommendation feel more intentional
+                precise_water = round(precise_water * 20) / 20
+                
+                # 5. Ensure the value is within realistic boundaries
+                min_water = 1.5  # Minimum healthy intake for adults
+                max_water = 5.0  # Maximum reasonable intake
+                final_water = max(min(precise_water, max_water), min_water)
+                
+                # Print debug info
+                print(f"Base formula: {formula_water}, Age factor: {age_factor}, Gender factor: {gender_factor}")
+                print(f"Final precise recommendation: {final_water} liters")
 
-                # Perform the prediction
-                predicted_water = model.predict(input_df)[0]
-
-                # Save new data entry into CSV (store string representations in the CSV)
+                # Save new data entry into CSV
                 new_entry = pd.DataFrame([{
-                    'gender': gender,  # Save as string ('male' or 'female')
+                    'gender': gender,
                     'age': age,
                     'weight': weight,
                     'climate': climate, 
@@ -266,22 +282,24 @@ def log_water(request):
                 if request.user.is_authenticated:
                     UserWaterIntake.objects.create(
                         user=request.user,
-                        water_amount=predicted_water,
+                        water_amount=final_water,
                         email_frequency=form.cleaned_data['email_frequency'],
                         reminder_times=[f"{int(hour):02d}:00" for hour in form.cleaned_data['reminder_times']],
                     )
                 else:
                     UserWaterIntake.objects.create(
                         session_key=request.session.session_key,
-                        water_amount=predicted_water,
+                        water_amount=final_water,
                     )
 
                 return redirect('rankup')
             except Exception as e:
+                import traceback
+                traceback.print_exc()
                 messages.error(request, f"Error processing your request: {str(e)}")
         else:
             messages.error(request, "Please correct the errors in the form.", extra_tags='log_water')
-            print("Form Errors:", form.errors)  # Debugging
+            print("Form Errors:", form.errors)
     else:
         form = WaterIntakeForm()
 
@@ -289,6 +307,12 @@ def log_water(request):
 
 def user_profile(request):
     dailygoal = UserWaterIntake.objects.filter(user=request.user).last()
+    
+    water_amount = 0
+    if dailygoal:
+        if dailygoal.water_amount is not None:
+            water_amount = round(dailygoal.water_amount, 2)
+            
     user_profile = get_object_or_404(Profile, user=request.user)
     if request.method == 'POST':
         update_form = ProfileForm(request.POST, request.FILES, instance=user_profile)
@@ -297,4 +321,4 @@ def user_profile(request):
     
     else:
         update_form = ProfileForm(instance=user_profile)
-    return render(request, 'pages/profile.html', {'dailygoal' : round(dailygoal.water_amount, 2), 'update_form' : update_form})
+    return render(request, 'pages/profile.html', {'dailygoal' : water_amount, 'update_form' : update_form})
